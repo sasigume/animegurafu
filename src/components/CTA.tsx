@@ -11,19 +11,19 @@ export const CTA = () => (
     maxWidth="48rem"
     py={2}
   >
-    <ChakraLink isExternal href="https://chakra-ui.com" flexGrow={1} mx={2}>
-      <Button width="100%" variant="outline" colorScheme="green">
-        chakra-ui
+    <ChakraLink isExternal href="https://jikan.moe/" flexGrow={1} mx={2}>
+      <Button width="100%" variant="outline" colorScheme="blue">
+        Jikan API
       </Button>
     </ChakraLink>
 
     <ChakraLink
       isExternal
-      href="https://github.com/vercel/next.js/blob/canary/examples/with-chakra-ui-typescript"
-      flexGrow={3}
+      href="https://github.com/sasigume/animegurafu"
+      flexGrow={1}
       mx={2}
     >
-      <Button width="100%" variant="solid" colorScheme="green">
+      <Button width="100%" variant="solid" colorScheme="blue">
         View Repo
       </Button>
     </ChakraLink>
