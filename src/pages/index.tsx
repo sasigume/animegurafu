@@ -11,25 +11,31 @@ import {
 import { CheckCircleIcon, LinkIcon } from '@chakra-ui/icons'
 
 import { Hero } from '../components/Hero'
-import { Container } from '../components/Container'
 import { Main } from '../components/Main'
 import { DarkModeSwitch } from '../components/DarkModeSwitch'
 import { CTA } from '../components/CTA'
 import { Footer } from '../components/Footer'
 import AnimeGraph from '@/components/anime-graph'
+import Head from 'next/head'
+import { Layout } from '@/components/layout'
 
 interface IndexProps {
   animeJson: any
 }
 
-const Index = ({ animeJson }: IndexProps) => {
+const Index = () => {
 
-  return (
-    <Container height="100vh">
+  return (<>
+    <Layout>
+
+    <Head>
+        <title>animegurafu</title>
+      </Head>
+
       <Hero />
       <Main>
         <Box>
-          <AnimeGraph animeData={animeJson} />
+          {/*<AnimeGraph animeData={animeJson} />*/}
         </Box>
         <Text>
           Built with <Code>Next.js</Code> + <Code>chakra-ui</Code> +{' '}
@@ -62,28 +68,20 @@ const Index = ({ animeJson }: IndexProps) => {
         <Text>Distributed under MIT Lisence. The site owner do not own these anime stats.</Text>
       </Footer>
       <CTA />
-    </Container>
+    </Layout>
+  </>
   )
 }
 
 export default Index
 
-export const getStaticProps: GetStaticProps = async () => {
+/*export const getStaticProps: GetStaticProps = async () => {
 
-  const animeJson = [
-    {
-      date: "2021-1-1",
-      animes:[
-        {
-          title:"hogegoe",
-          members:"aaa"
-        }
-    ]}
-  ]
+  const animeJson = null
 
   return {
     props: {
       animeJson: animeJson ?? null
     }
   }
-}
+}*/

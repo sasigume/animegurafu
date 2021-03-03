@@ -1,5 +1,5 @@
-import { Anime } from "@/models/Anime"
-import { AnimeData } from "@/models/AnimeData"
+import { Anime } from "@/models/firebase/Anime"
+import { AnimeData } from "@/models/firebase/AnimeData"
 import { Box } from "@chakra-ui/react"
 
 interface AnimeGraphProps {
@@ -17,7 +17,7 @@ const AnimeGraph = ({animeData}:AnimeGraphProps) => {
           <Box>{
             ad.animes.map(
               (anime:Anime) =>
-              <Box>
+              <Box key={anime.mal_id}>
                 {anime.title} / {anime.members}
               </Box>
             )}</Box>

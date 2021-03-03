@@ -1,6 +1,6 @@
 {
   "name": "animegurafu",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "scripts": {
     "dev": "next",
     "build": "next build",
@@ -13,6 +13,8 @@
     "@emotion/react": "11.1.5",
     "@emotion/styled": "11.1.5",
     "dayjs": "^1.10.4",
+    "firebase": "^8.2.9",
+    "firebase-admin": "^9.5.0",
     "framer-motion": "^3.5.2",
     "next": "latest",
     "react": "^17.0.1",
