@@ -1,3 +1,4 @@
+import { Subtype } from "../firebase/Anime";
 export interface Pos {
   x: string,
   y: number
@@ -7,4 +8,9 @@ export interface graphData {
   data: Pos[]
 }
 
-export type Converted = graphData[]
+export type Converted = {
+  mode: Subtype
+  date: string
+  animes: graphData[]
+  animesForBump: graphData[]
+}

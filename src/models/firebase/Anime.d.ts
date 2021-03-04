@@ -1,6 +1,6 @@
 export type Subtype = "byscore" | "bypopularity"
 export interface NumberOfDate {
-  [key:string]: string
+  [key:string]: number
 }
 export interface AnimeOnFirebase {
   start_date: string
@@ -17,6 +17,14 @@ export interface AnimeOnFirebase {
   favorites: number
   rankOfPopularity: number
   rankOfScore: number
-  membersArray: numberOfDate[]
   scoreArray: numberOfDate[]
+  membersArray: numberOfDate[]
+  rankOfScoreArray: numberOfDate[]
+  rankOfPopularityArray: numberOfDate[]
+}
+
+export interface FetchedData {
+  mode: string
+  date: string
+  animes: AnimeOnFirebase[]
 }
