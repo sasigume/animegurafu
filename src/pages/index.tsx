@@ -20,13 +20,14 @@ import AnimeGraph from '@/components/anime-graph'
 import Head from 'next/head'
 import { Layout } from '@/components/layout'
 
-import { AnimeOnFirebase } from '@/models/firebase/Anime'
+import { FetchedData } from '@/models/firebase/Anime'
 
 interface IndexProps {
-  animes: AnimeOnFirebase[]
+  dataByScore: FetchedData
+  dataByPopularity: FetchedData
 }
 
-const Index = ({ animes }: IndexProps) => {
+const Index = ({ dataByScore, dataByPopularity }: IndexProps) => {
 
   return (<>
     <Layout>
@@ -36,13 +37,11 @@ const Index = ({ animes }: IndexProps) => {
       </Head>
       <Main>
         <Box>
-          <Box fontSize="2rem">スコア</Box>
+          <AnimeGraph dataFromFirebase={dataByScore} />
           <Divider />
-          <AnimeGraph animes={animes} mode="byscore" />
-          <Box fontSize="2rem">人気</Box>
-          <Divider />
-          <AnimeGraph animes={animes} mode="bypopularity" />
+          <AnimeGraph dataFromFirebase={dataByPopularity} />
         </Box>
+        <Divider my={8} />
         <Text>
           Built with <Code>Next.js</Code> + <Code>chakra-ui</Code> + <Code>firebase</Code> + <Code>nivo</Code> +{' '}
           <Code>typescript</Code>.
@@ -85,12 +84,18 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const secret = process.env.PAGES_MAL_API_SECRET
 
-  const animesRes = await fetch(process.env.HTTPS_URL + `/api/mal/?secret=${secret}`)
-  const animesJson = await animesRes.json()
+  const apiResultByscore = await fetch(process.env.HTTPS_URL + `/api/mal/?secret=${secret}&mode=byscore`)
+  const apiResultBypopularity = await fetch(process.env.HTTPS_URL + `/api/mal/?secret=${secret}&mode=bypopularity`)
 
+  const json = {
+    byscore: await apiResultByscore.json(),
+    bypopularity: await apiResultBypopularity.json()
+  }
+ 
   return {
     props: {
-      animes: animesJson ?? null
+      dataByScore: json.byscore ?? null,
+      dataByPopularity: json.bypopularity ?? null
     }
   }
 }

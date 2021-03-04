@@ -2,20 +2,34 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import firebase from 'firebase/app'
 import '@/lib/firebase/admin'
 import { firestore } from 'firebase-admin'
-import { AnimeOnFirebase } from '@/models/firebase/Anime'
+import { AnimeOnFirebase, FetchedData, Subtype } from '@/models/firebase/Anime'
+import dayjs from 'dayjs'
 
 interface Message {
   message: string
 }
 
-export default async (req: NextApiRequest, res: NextApiResponse<AnimeOnFirebase[] | Message>) => {
+export default async (req: NextApiRequest, res: NextApiResponse<FetchedData | Message>) => {
 
   let secret = req.query.secret as string
+  let mode = req.query.mode as Subtype
+
   let limit: number
-  process.env.FIRESTORE_LIMIT ? limit = parseInt(process.env.FIRESTORE_LIMIT) : limit = 50
+  process.env.FIRESTORE_LIMIT ? limit = parseInt(process.env.FIRESTORE_LIMIT) : limit = 10
 
   if (secret != process.env.PAGES_MAL_API_SECRET) {
     return res.status(401).json({ message: 'Invalid secret token' })
+  }
+
+  if (!(mode == "byscore" || mode == "bypopularity")) {
+    return res.status(401).json({ message: "Please specify byscore or bypopularity"})
+  }
+
+  let order: string
+  if (mode == "bypopularity") {
+    order = "rankOfPopularity"
+  } if (mode == "byscore") {
+    order = "rankOfScore"
   }
 
   function GetArrayOfData(
@@ -31,13 +45,15 @@ export default async (req: NextApiRequest, res: NextApiResponse<AnimeOnFirebase[
   function createBaseQuery() {
     return firestore()
       .collection("animeCollection")
+      .orderBy(order)
+      .limit(limit)
   }
 
   const snapshot = await createBaseQuery().get()
 
-  const animes = GetArrayOfData(snapshot)
+  const animesData = GetArrayOfData(snapshot)
 
-  const result = await Promise.all(animes.map(async (anime: AnimeOnFirebase) => {
+  const animesArray = await Promise.all(animesData.map(async (anime: AnimeOnFirebase) => {
     return {
       mal_id: anime.mal_id,
       title: anime.title,
@@ -58,5 +74,9 @@ export default async (req: NextApiRequest, res: NextApiResponse<AnimeOnFirebase[
     }
   }))
 
-  res.status(200).json(result)
+  res.status(200).json({
+    mode: mode,
+    date: dayjs().format('YYYY-MM-DD'),
+    animes: animesArray
+  })
 }

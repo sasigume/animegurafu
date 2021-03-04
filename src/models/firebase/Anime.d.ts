@@ -20,3 +20,9 @@ export interface AnimeOnFirebase {
   membersArray: numberOfDate[]
   scoreArray: numberOfDate[]
 }
+
+export interface FetchedData {
+  mode: string
+  date: string
+  animes: AnimeOnFirebase[]
+}

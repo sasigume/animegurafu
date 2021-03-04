@@ -36,7 +36,7 @@ const Line = (props: GraphProps) => {
       <VictoryChart height={400} width={400}
         containerComponent={vono}
       >
-        {props.data.map((gd: graphData) => {
+        {props.data.animes.map((gd: graphData) => {
 
           return (
             <VictoryGroup
