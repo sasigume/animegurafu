@@ -1,19 +1,52 @@
 import { Anime } from "@/models/firebase/Anime"
 import { AnimeData } from "@/models/firebase/AnimeData"
-import { Box } from "@chakra-ui/react"
+import { Box, Divider } from "@chakra-ui/react"
+import AnimeConvert from '@/lib/anime-convert'
+
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
 interface AnimeGraphProps {
-  animeDatas?: AnimeData[]
+  animeDatas: AnimeData[]
 }
 
 const AnimeGraph = ({ animeDatas }: AnimeGraphProps) => {
+  
+  const DataArray = AnimeConvert(animeDatas)
+  
   return (
     <Box>
-      {(animeDatas && animeDatas?.length > 0) && animeDatas.map(
-        (ad: AnimeData) => {
+
+      {/*DataArray.map(
+        (DA: any) => {
           return (
             <Box key={ad.date}>
-              {ad.date}
+              <Box fontSize="1.7rem"><h3>{ad.date}</h3></Box>
+
+              <Box>{ad.animes.map((anime: Anime) =>
+                <Box key={anime.mal_id}>
+                  <LineChart
+                    width={500}
+                    height={300}
+                    data={ad}
+                    margin={{
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="score" stroke="#8884d8" activeDot={{ r: 8 }} />
+
+                  </LineChart>
+                </Box>
+              )}</Box>
+
+              <Divider />
               <Box>{
                 ad.animes.map(
                   (anime: Anime) =>
@@ -24,7 +57,7 @@ const AnimeGraph = ({ animeDatas }: AnimeGraphProps) => {
             </Box>
           )
         }
-      )}
+      )*/}
     </Box>
   )
 }

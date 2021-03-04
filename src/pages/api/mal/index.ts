@@ -4,9 +4,17 @@ import '@/lib/firebase/admin'
 import { firestore } from 'firebase-admin'
 import { AnimeData } from '@/models/firebase/AnimeData'
 
-const mode = "animeByscore"
+
 
 export default async (req: NextApiRequest, res: NextApiResponse<AnimeData[]>) => {
+
+  let collectionName = "animeByscore"
+
+  let mode = req.query.mode as string
+
+  if(mode=="bypopularity") {
+    collectionName = "animeBypopularity"
+  }
 
   function GetArrayOfData(
     snapshot: firestore.QuerySnapshot<firebase.firestore.DocumentData>,
@@ -21,7 +29,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<AnimeData[]>) =>
 
   function createBaseQuery() {
     return firestore()
-      .collection(mode)
+      .collection(collectionName)
   }
 
 
@@ -32,7 +40,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<AnimeData[]>) =>
 
   const animeData = await Promise.all(datas.map(async (data: any) => {
     let subCollections = await firestore()
-      .collection(mode)
+      .collection(collectionName)
       .doc(data.date)
       .listCollections()
       .then(async (collection) => {

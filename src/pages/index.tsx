@@ -21,6 +21,8 @@ import Head from 'next/head'
 import { Layout } from '@/components/layout'
 import { AnimeData } from '@/models/firebase/AnimeData'
 
+import { sampleData } from './sampleJson'
+
 interface IndexProps {
   animeDatasByScore: AnimeData[]
 }
@@ -81,12 +83,12 @@ export default Index
 
 export const getStaticProps: GetStaticProps = async () => {
 
-  const animeResByScore = await fetch(process.env.HTTPS_URL + `/api/byscore/`)
-  const animeJsonByScore = await animeResByScore.json()
+  //const animeResByScore = await fetch(process.env.HTTPS_URL + `/api/mal/?mode=byscore`)
+  //const animeJsonByScore = await animeResByScore.json()
 
   return {
     props: {
-      animeDatasByScore: animeJsonByScore ?? null
+      animeDatasByScore: sampleData ?? null
     }
   }
 }
