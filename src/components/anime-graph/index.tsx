@@ -1,17 +1,14 @@
-import { Anime } from "@/models/firebase/Anime"
-import { AnimeData } from "@/models/firebase/AnimeData"
+import { AnimeOnFirebase } from "@/models/firebase/Anime"
 import { Box, Divider } from "@chakra-ui/react"
-import AnimeConvert from '@/lib/anime-convert'
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
 interface AnimeGraphProps {
-  animeDatas: AnimeData[]
+  animes: AnimeOnFirebase[]
 }
 
-const AnimeGraph = ({ animeDatas }: AnimeGraphProps) => {
-  
-  const DataArray = AnimeConvert(animeDatas)
+const AnimeGraph = ({ animes }: AnimeGraphProps) => {
+
   
   return (
     <Box>

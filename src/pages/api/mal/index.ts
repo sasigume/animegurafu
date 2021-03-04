@@ -2,75 +2,49 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import firebase from 'firebase/app'
 import '@/lib/firebase/admin'
 import { firestore } from 'firebase-admin'
-import { AnimeData } from '@/models/firebase/AnimeData'
+import { AnimeOnFirebase } from '@/models/firebase/Anime'
 
-
-
-export default async (req: NextApiRequest, res: NextApiResponse<AnimeData[]>) => {
-
-  let collectionName = "animeByscore"
-
-  let mode = req.query.mode as string
-
-  if(mode=="bypopularity") {
-    collectionName = "animeBypopularity"
-  }
+export default async (req: NextApiRequest, res: NextApiResponse<AnimeOnFirebase[]>) => {
 
   function GetArrayOfData(
     snapshot: firestore.QuerySnapshot<firebase.firestore.DocumentData>,
   ) {
-    const array = snapshot.docs.map((doc) => {
-      return {
-        date: doc.data().date,
-      }
+    const animeArray = snapshot.docs.map((doc) => {
+      const animeOnFirebase = doc.data() as AnimeOnFirebase
+      return animeOnFirebase
     })
-    return array
+    return animeArray
   }
 
   function createBaseQuery() {
     return firestore()
-      .collection(collectionName)
+      .collection("animeCollection")
   }
-
-
 
   const snapshot = await createBaseQuery().get()
 
-  const datas = GetArrayOfData(snapshot)
+  const animes = GetArrayOfData(snapshot)
 
-  const animeData = await Promise.all(datas.map(async (data: any) => {
-    let subCollections = await firestore()
-      .collection(collectionName)
-      .doc(data.date)
-      .listCollections()
-      .then(async (collection) => {
-        let subCollections = await Promise.all(collection.map(async (sc) => {
-          let oneCollection = await sc
-            .get()
-            .then((animeCollection => {
-              let animeDocs = Promise.all(animeCollection.docs.map(async (d) => {
-                let animeData = await d.data()
-                return animeData
-              }))
-              return animeDocs
-            })
-            )
-          oneCollection.sort((a, b) => a.rank - b.rank)
-          return oneCollection
-        }))
-        return {
-          animes: subCollections[0],
-          schedule: subCollections[1]
-        }
-      })
-
+  const result = await Promise.all(animes.map(async (anime: AnimeOnFirebase) => {
     return {
-      date: data.date,
-      animes: subCollections.animes,
-      schedule: subCollections.animes
+      mal_id: anime.mal_id,
+      title: anime.title,
+      title_japanese: anime.title_japanese,
+      url: anime.url,
+      image_url: anime.image_url,
+      type: anime.type,
+      start_date: anime.start_date,
+      end_date: anime.end_date,
+      score: anime.score,
+      scored_by: anime.scored_by,
+      rankOfScore: anime.rankOfScore,
+      rankOfPopularity: anime.rankOfPopularity,
+      members: anime.members,
+      favorites: anime.favorites,
+      membersArray: anime.membersArray,
+      scoreArray: anime.scoreArray
     }
-    // https://stackoverflow.com/questions/55620618/how-to-get-sub-collections-with-firebase-firestore
   }))
 
-  res.status(200).json(animeData)
+  res.status(200).json(result)
 }

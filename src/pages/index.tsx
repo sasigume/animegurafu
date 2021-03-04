@@ -19,15 +19,15 @@ import { Footer } from '../components/Footer'
 import AnimeGraph from '@/components/anime-graph'
 import Head from 'next/head'
 import { Layout } from '@/components/layout'
-import { AnimeData } from '@/models/firebase/AnimeData'
 
 import { sampleData } from './sampleJson'
+import { AnimeOnFirebase } from '@/models/firebase/Anime'
 
 interface IndexProps {
-  animeDatasByScore: AnimeData[]
+  animes: AnimeOnFirebase[]
 }
 
-const Index = ({ animeDatasByScore }: IndexProps) => {
+const Index = ({ animes }: IndexProps) => {
 
   return (<>
     <Layout>
@@ -41,7 +41,7 @@ const Index = ({ animeDatasByScore }: IndexProps) => {
         <Box>
           <Box fontSize="2rem">スコア順</Box>
           <Divider />
-          <AnimeGraph animeDatas={animeDatasByScore} />
+          <AnimeGraph animes={animes} />
         </Box>
         <Text>
           Built with <Code>Next.js</Code> + <Code>chakra-ui</Code> +{' '}
@@ -83,12 +83,12 @@ export default Index
 
 export const getStaticProps: GetStaticProps = async () => {
 
-  //const animeResByScore = await fetch(process.env.HTTPS_URL + `/api/mal/?mode=byscore`)
-  //const animeJsonByScore = await animeResByScore.json()
+  const animesRes = await fetch(process.env.HTTPS_URL + `/api/mal/`)
+  const animesJson = await animesRes.json()
 
   return {
     props: {
-      animeDatasByScore: sampleData ?? null
+      animes: animesJson ?? null
     }
   }
 }
