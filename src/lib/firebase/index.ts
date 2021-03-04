@@ -3,7 +3,7 @@ import 'firebase/analytics'
 import 'firebase/auth'
 import 'firebase/firestore'
 
-/*const config = {
+const config = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
   projectId: process.env.FIREBASE_PROJECT_ID,
@@ -11,9 +11,9 @@ import 'firebase/firestore'
   messagingSenderId: process.env.FIREBASE_MESSEGING_SENDER_ID,
   appId: process.env.FIREBASE_APP_ID,
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
-} */
+}
 if (!firebase.apps.length) {
-  // firebase.initializeApp(config)
+  firebase.initializeApp(config)
 }
 
 export default firebase

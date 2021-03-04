@@ -7,6 +7,7 @@ import {
   ListIcon,
   ListItem,
   Box,
+  Divider,
 } from '@chakra-ui/react'
 import { CheckCircleIcon, LinkIcon } from '@chakra-ui/icons'
 
@@ -18,12 +19,13 @@ import { Footer } from '../components/Footer'
 import AnimeGraph from '@/components/anime-graph'
 import Head from 'next/head'
 import { Layout } from '@/components/layout'
+import { AnimeData } from '@/models/firebase/AnimeData'
 
 interface IndexProps {
-  animeJson: any
+  animeDatasByScore: AnimeData[]
 }
 
-const Index = () => {
+const Index = ({ animeDatasByScore }: IndexProps) => {
 
   return (<>
     <Layout>
@@ -35,7 +37,9 @@ const Index = () => {
       <Hero />
       <Main>
         <Box>
-          {/*<AnimeGraph animeData={animeJson} />*/}
+          <Box fontSize="2rem">スコア順</Box>
+          <Divider />
+          <AnimeGraph animeDatas={animeDatasByScore} />
         </Box>
         <Text>
           Built with <Code>Next.js</Code> + <Code>chakra-ui</Code> +{' '}
@@ -75,13 +79,14 @@ const Index = () => {
 
 export default Index
 
-/*export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
 
-  const animeJson = null
+  const animeResByScore = await fetch(process.env.HTTPS_URL + `/api/byscore/`)
+  const animeJsonByScore = await animeResByScore.json()
 
   return {
     props: {
-      animeJson: animeJson ?? null
+      animeDatasByScore: animeJsonByScore ?? null
     }
   }
-}*/
+}

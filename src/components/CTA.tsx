@@ -1,7 +1,9 @@
+import { CONST_REPO_URL } from '@/lib/constants'
 import { Link as ChakraLink, Button } from '@chakra-ui/react'
 
 import { Container } from './Container'
 
+// CTA stands for Call To Action
 export const CTA = () => (
   <Container
     flexDirection="row"
@@ -19,7 +21,7 @@ export const CTA = () => (
 
     <ChakraLink
       isExternal
-      href="https://github.com/sasigume/animegurafu"
+      href={CONST_REPO_URL}
       flexGrow={1}
       mx={2}
     >
