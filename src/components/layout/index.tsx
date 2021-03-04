@@ -1,4 +1,5 @@
-import { Flex, useColorMode, FlexProps, Box } from '@chakra-ui/react'
+import { Flex, useColorMode, FlexProps, Box, Center } from '@chakra-ui/react'
+import { Main } from '../Main'
 import Head from 'next/head'
 import { ReactNode } from 'react'
 import { Hero } from '../Hero'
@@ -8,7 +9,7 @@ interface LayoutProps {
   flexProps?: FlexProps
 }
 
-export const Layout = ({ children, flexProps }: LayoutProps) => {
+export const Layout = ({ children }: LayoutProps) => {
   const { colorMode } = useColorMode()
 
   const bgColor = { light: 'gray.50', dark: 'gray.900' }
@@ -17,21 +18,26 @@ export const Layout = ({ children, flexProps }: LayoutProps) => {
 
   // important: DO NOT WRAP this Flex with any component!!!
   return (
+  <Box w="full">
     <Flex
       direction="column"
       alignItems="center"
-      justifyContent="flex-start"
+      justifyContent="center"
       bg={bgColor[colorMode]}
       color={color[colorMode]}
-      {...flexProps}
     >
       <Head>
         <title>animegurafu</title>
       </Head>
-      <Hero />
+      <Box>
+        <Hero />
 
-      {children}
+          {children}
+
+
+      </Box>
 
     </Flex>
+  </Box>
   )
 }

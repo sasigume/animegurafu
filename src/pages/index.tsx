@@ -11,8 +11,6 @@ import {
 } from '@chakra-ui/react'
 import { CheckCircleIcon, LinkIcon } from '@chakra-ui/icons'
 
-import { Hero } from '../components/Hero'
-import { Main } from '../components/Main'
 import { DarkModeSwitch } from '../components/DarkModeSwitch'
 import { CTA } from '../components/CTA'
 import { Footer } from '../components/Footer'
@@ -35,7 +33,6 @@ const Index = ({ dataByScore, dataByPopularity }: IndexProps) => {
       <Head>
         <title>animegurafu</title>
       </Head>
-      <Main>
         <Box>
           <AnimeGraph dataFromFirebase={dataByScore} />
           <Divider />
@@ -66,7 +63,6 @@ const Index = ({ dataByScore, dataByPopularity }: IndexProps) => {
             </ChakraLink>
           </ListItem>
         </List>
-      </Main>
 
       <DarkModeSwitch />
       <Footer px={6}>

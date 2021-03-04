@@ -14,6 +14,7 @@ const NivoLine = (props: GraphProps) => {
       max: 10
     }
   }
+  console.log('Line: ', props.data)
   return (
     <Box w="full" h="full">
       <ResponsiveLine

@@ -17,6 +17,7 @@ export interface AnimeOnFirebase {
   favorites: number
   rankOfPopularity: number
   rankOfScore: number
+  scoreArray: numberOfDate[]
   membersArray: numberOfDate[]
   rankOfScoreArray: numberOfDate[]
   rankOfPopularityArray: numberOfDate[]

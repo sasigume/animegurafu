@@ -8,30 +8,27 @@ import dayjs from "dayjs"
 
 const ConvertForGraph = (data:FetchedData) => {
   const convertedData = data.animes.map((anime: AnimeOnFirebase) => {
+
+    let inArray = anime.scoreArray
+    if (data.mode == "bypopularity") {
+      inArray = anime.membersArray
+    }
+
     let positionArray: any = []
-    for (let key in anime.scoreArray) {
+    for (let key in inArray) {
       // Change pos of dot depends on mode
       let numberOfDate: NumberOfDate = anime.scoreArray[key]
       
       if (data.mode == "bypopularity") {
         numberOfDate = anime.membersArray[key]
       }
+      
       let singlePos = {
         x: Object.keys(numberOfDate)[0],
         y: Object.values(numberOfDate)[0]
       }
       
       positionArray.push(singlePos)
-
-      let singlePos2 = {
-        x: Object.keys(numberOfDate)[0],
-        y: Object.values(numberOfDate)[0] + 1
-      }
-
-      // testing
-      positionArray.push(singlePos2)
-
-      console.log(positionArray)
     }
 
     return {
@@ -40,10 +37,42 @@ const ConvertForGraph = (data:FetchedData) => {
     }
   })
 
+  // this returns only int rank
+  const convertedDataForBump = data.animes.map((anime: AnimeOnFirebase) => {
+    let positionArrayForBump: any = []
+
+    let inArray = anime.rankOfScoreArray
+    
+    if (data.mode == "bypopularity") {
+      inArray = anime.rankOfPopularityArray
+    }
+
+    for (let key in inArray) {
+      // Change pos of dot depends on mode
+      let numberOfDate: NumberOfDate = anime.rankOfScoreArray[key]
+      
+      if (data.mode == "bypopularity") {
+        numberOfDate = anime.rankOfPopularityArray[key]
+      }
+      let singlePos = {
+        x: Object.keys(numberOfDate)[0],
+        y: Object.values(numberOfDate)[0]
+      }
+      
+      positionArrayForBump.push(singlePos)
+    }
+
+    return {
+      id: `${anime.title_japanese}`,
+      data: positionArrayForBump
+    }
+  })
+
   return {
     mode: data.mode,
     date: dayjs().format('YYYY-MM-DD'),
-    animes: convertedData
+    animes: convertedData,
+    animesForBump: convertedDataForBump
   } as Converted
 }
 

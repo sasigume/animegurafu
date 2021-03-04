@@ -17,7 +17,7 @@ const NivoBump = (props: GraphProps) => {
   return (
     <Box w="full" h="full">
       <ResponsiveBump
-        data={props.data.animes}
+        data={props.data.animesForBump}
         margin={{ top: 40, right: 100, bottom: 40, left: 60 }}
         colors={{ scheme: 'spectral' }}
         pointSize={10}
@@ -45,9 +45,9 @@ const NivoBump = (props: GraphProps) => {
           legendOffset: 32
         }}
         axisLeft={{
-          /*tickSize: 5,
+          tickSize: 5,
           tickPadding: 5,
-          tickRotation: 0,*/
+          tickRotation: 0,
           legend: props.data.mode,
           legendPosition: 'middle',
           legendOffset: -40

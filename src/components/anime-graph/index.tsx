@@ -17,20 +17,22 @@ const AnimeGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
   return (
     <Box>
       <Box fontSize="2rem">{dataFromFirebase.mode == "byscore" ? "スコア順" : "人気順"}</Box>
-      {
-        // BUMP IS BROKEN
-        <Box h="container.md" position="static">
-          <NivoBump data={dataForGraph} />
-        </Box>}
-      {/*
       <Box h="container.md" position="static">
+      <Box fontSize="1.6rem">順位推移</Box>
+        <NivoBump data={dataForGraph} />
+      </Box>
+      <Divider my={8} />
+      <Box h="container.md" position="static">
+      <Box fontSize="1.6rem">数値推移</Box>
         <NivoLine data={dataForGraph} />
-      </Box>*/}
-      <Divider my={16} />
+      </Box>
+
       {/*<Box h="container.md" position="static">
         <VictoryLine data={dataForGraph} />
 </Box>*/}
+      <Divider my={16} />
     </Box>
+
   )
 }
 

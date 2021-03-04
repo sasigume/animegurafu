@@ -70,13 +70,15 @@ export default async (req: NextApiRequest, res: NextApiResponse<FetchedData | Me
       members: anime.members,
       favorites: anime.favorites,
       membersArray: anime.membersArray,
-      scoreArray: anime.scoreArray
+      scoreArray: anime.scoreArray,
+      rankOfScoreArray: anime.rankOfScoreArray,
+      rankOfPopularityArray: anime.rankOfPopularityArray,
     }
   }))
 
   res.status(200).json({
     mode: mode,
     date: dayjs().format('YYYY-MM-DD'),
-    animes: animesArray
+    animes: animesArray,
   })
 }
