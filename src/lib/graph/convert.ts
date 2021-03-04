@@ -1,6 +1,11 @@
 import { AnimeOnFirebase, NumberOfDate, Subtype } from "@/models/firebase/Anime"
+import { Converted } from "@/models/graph/Converted"
 
-const ConvertForNivo = (animes: AnimeOnFirebase[], mode: Subtype) => {
+
+  // Conver data into the structure shown below URL
+  // https://nivo.rocks/bump/
+
+const ConvertForGraph = (animes: AnimeOnFirebase[], mode: Subtype) => {
   const convertedData = animes.map((anime: AnimeOnFirebase) => {
     let positionArray: any = []
     for (let key in anime.scoreArray) {
@@ -11,9 +16,18 @@ const ConvertForNivo = (animes: AnimeOnFirebase[], mode: Subtype) => {
       }
       let singlePos = {
         x: Object.keys(numberOfDate)[0],
-        y: Object.values(numberOfDate)[0]
+        y: parseFloat(Object.values(numberOfDate)[0])
       }
+      
       positionArray.push(singlePos)
+
+      /*let singlePos2 = {
+        x: Object.keys(numberOfDate)[0]+1,
+        y: parseFloat(Object.values(numberOfDate)[0]) - 1
+      }
+
+      // testing
+      positionArray.push(singlePos2) */
     }
 
     return {
@@ -22,7 +36,7 @@ const ConvertForNivo = (animes: AnimeOnFirebase[], mode: Subtype) => {
     }
   })
 
-  return convertedData
+  return convertedData as Converted
 }
 
-export default ConvertForNivo
+export default ConvertForGraph

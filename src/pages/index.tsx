@@ -31,7 +31,7 @@ const Index = ({ animes }: IndexProps) => {
   return (<>
     <Layout>
 
-    <Head>
+      <Head>
         <title>animegurafu</title>
       </Head>
       <Main>
