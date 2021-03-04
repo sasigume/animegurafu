@@ -70,7 +70,7 @@ const ConvertForGraph = (data:FetchedData) => {
 
   return {
     mode: data.mode,
-    date: dayjs().format('YYYY-MM-DD'),
+    lastConverted: dayjs().toDate(),
     animes: convertedData,
     animesForBump: convertedDataForBump
   } as Converted

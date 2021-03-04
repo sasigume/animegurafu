@@ -22,7 +22,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<FetchedData | Me
   }
 
   if (!(mode == "byscore" || mode == "bypopularity")) {
-    return res.status(401).json({ message: "Please specify byscore or bypopularity"})
+    return res.status(401).json({ message: "Please specify byscore or bypopularity" })
   }
 
   let order: string
@@ -55,6 +55,9 @@ export default async (req: NextApiRequest, res: NextApiResponse<FetchedData | Me
 
   const animesArray = await Promise.all(animesData.map(async (anime: AnimeOnFirebase) => {
     return {
+      lastUpdateEnv: anime.lastUpdateEnv,
+      lastUpdateTime: anime.lastUpdateTime,
+      updateTimeArray: anime.updateTimeArray,
       mal_id: anime.mal_id,
       title: anime.title,
       title_japanese: anime.title_japanese,
@@ -78,7 +81,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<FetchedData | Me
 
   res.status(200).json({
     mode: mode,
-    date: dayjs().format('YYYY-MM-DD'),
+    lastFetched: dayjs().toDate(),
     animes: animesArray,
   })
 }

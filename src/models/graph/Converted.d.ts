@@ -10,7 +10,7 @@ export interface graphData {
 
 export type Converted = {
   mode: Subtype
-  date: string
+  lastConverted: Date
   animes: graphData[]
   animesForBump: graphData[]
 }

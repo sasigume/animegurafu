@@ -2,7 +2,13 @@ export type Subtype = "byscore" | "bypopularity"
 export interface NumberOfDate {
   [key:string]: number
 }
+export interface tsOfDate {
+  [key: string]: firebase.firestore.Timestamp
+}
 export interface AnimeOnFirebase {
+  lastUpdateEnv: string
+  lastUpdateTime: string
+  updateTimeArray: tsOfDate[]
   start_date: string
   end_date?: string
   mal_id: string
@@ -25,6 +31,6 @@ export interface AnimeOnFirebase {
 
 export interface FetchedData {
   mode: string
-  date: string
+  lastFetched: Date
   animes: AnimeOnFirebase[]
 }

@@ -19,16 +19,22 @@ import Head from 'next/head'
 import { Layout } from '@/components/layout'
 
 import { FetchedData } from '@/models/firebase/Anime'
+import dayjs from 'dayjs'
 
 interface IndexProps {
   dataByScore: FetchedData
   dataByPopularity: FetchedData
+  lastGSP: Date
 }
 
-const Index = ({ dataByScore, dataByPopularity }: IndexProps) => {
+const Index = ({ dataByScore, dataByPopularity,lastGSP }: IndexProps) => {
 
   return (<>
-    <Layout>
+    <Layout debugInfo={
+      {
+        lastGSP: lastGSP
+      }
+    }>
 
       <Head>
         <title>animegurafu</title>
@@ -90,6 +96,7 @@ export const getStaticProps: GetStaticProps = async () => {
  
   return {
     props: {
+      lastGSP: dayjs().toString(),
       dataByScore: json.byscore ?? null,
       dataByPopularity: json.bypopularity ?? null
     }
