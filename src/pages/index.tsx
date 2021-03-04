@@ -24,6 +24,7 @@ interface IndexProps {
   dataByScore: FetchedData
   dataByPopularity: FetchedData
 }
+/*
 
 const Index = ({ dataByScore, dataByPopularity }: IndexProps) => {
 
@@ -95,3 +96,6 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   }
 }
+ */
+
+export default function Index() {return <Box>API準備中</Box>}
