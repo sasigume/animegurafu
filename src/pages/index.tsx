@@ -20,7 +20,6 @@ import AnimeGraph from '@/components/anime-graph'
 import Head from 'next/head'
 import { Layout } from '@/components/layout'
 
-import { sampleData } from './sampleJson'
 import { AnimeOnFirebase } from '@/models/firebase/Anime'
 
 interface IndexProps {
