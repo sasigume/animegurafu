@@ -4,7 +4,6 @@ import { Converted } from "@/models/graph/Converted"
 import { Box, Divider } from "@chakra-ui/react"
 import NivoBump from "./nivo/nivo-bump"
 import NivoLine from "./nivo/nivo-line"
-import VictoryLine from "./victory/victory-line"
 
 interface AnimeGraphProps {
   dataFromFirebase: FetchedData
@@ -26,10 +25,6 @@ const AnimeGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
       <Box fontSize="1.6rem">数値推移</Box>
         <NivoLine data={dataForGraph} />
       </Box>
-
-      {/*<Box h="container.md" position="static">
-        <VictoryLine data={dataForGraph} />
-</Box>*/}
       <Divider my={16} />
     </Box>
 
