@@ -12,4 +12,5 @@ export type Converted = {
   mode: Subtype
   date: string
   animes: graphData[]
+  animesForBump: graphData[]
 }
