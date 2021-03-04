@@ -4,12 +4,24 @@ import '@/lib/firebase/admin'
 import { firestore } from 'firebase-admin'
 import { AnimeOnFirebase } from '@/models/firebase/Anime'
 
-export default async (req: NextApiRequest, res: NextApiResponse<AnimeOnFirebase[]>) => {
+interface Message {
+  message: string
+}
+
+export default async (req: NextApiRequest, res: NextApiResponse<AnimeOnFirebase[] | Message>) => {
+
+  let secret = req.query.secret as string
+  let limit: number
+  process.env.FIRESTORE_LIMIT ? limit = parseInt(process.env.FIRESTORE_LIMIT) : limit = 50
+
+  if (secret != process.env.PAGES_MAL_API_SECRET) {
+    return res.status(401).json({ message: 'Invalid secret token' })
+  }
 
   function GetArrayOfData(
     snapshot: firestore.QuerySnapshot<firebase.firestore.DocumentData>,
   ) {
-    const animeArray = snapshot.docs.map((doc) => {
+    const animeArray = snapshot.docs.slice(0, limit).map((doc) => {
       const animeOnFirebase = doc.data() as AnimeOnFirebase
       return animeOnFirebase
     })

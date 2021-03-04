@@ -1,6 +1,7 @@
-import { Flex, useColorMode, FlexProps } from '@chakra-ui/react'
+import { Flex, useColorMode, FlexProps, Box } from '@chakra-ui/react'
 import Head from 'next/head'
 import { ReactNode } from 'react'
+import { Hero } from '../Hero'
 
 interface LayoutProps {
   children: ReactNode,
@@ -27,7 +28,10 @@ export const Layout = ({ children, flexProps }: LayoutProps) => {
       <Head>
         <title>animegurafu</title>
       </Head>
+      <Hero />
+
       {children}
+
     </Flex>
   )
 }

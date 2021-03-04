@@ -1,7 +1,7 @@
-interface numberOfDate {
+export type Subtype = "byscore" | "bypopularity"
+export interface NumberOfDate {
   [key:string]: string
 }
-
 export interface AnimeOnFirebase {
   start_date: string
   end_date?: string

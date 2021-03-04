@@ -31,19 +31,20 @@ const Index = ({ /*animes*/ }: IndexProps) => {
   return (<>
     <Layout>
 
-    <Head>
+      <Head>
         <title>animegurafu</title>
       </Head>
-
-      <Hero />
       <Main>
-        <Box>
-          <Box fontSize="2rem">スコア順</Box>
+        {/*} <Box>
+          <Box fontSize="2rem">スコア</Box>
           <Divider />
-          {/*<AnimeGraph animes={animes} />*/}
-        </Box>
+          <AnimeGraph animes={animes} mode="byscore" />
+          <Box fontSize="2rem">人気</Box>
+          <Divider />
+          <AnimeGraph animes={animes} mode="bypopularity" />
+  </Box> */}
         <Text>
-          Built with <Code>Next.js</Code> + <Code>chakra-ui</Code> +{' '}
+          Built with <Code>Next.js</Code> + <Code>chakra-ui</Code> + <Code>firebase</Code> + <Code>nivo</Code> +{' '}
           <Code>typescript</Code>.
       </Text>
 
@@ -82,7 +83,9 @@ export default Index
 
 /*export const getStaticProps: GetStaticProps = async () => {
 
-  const animesRes = await fetch(process.env.HTTPS_URL + `/api/mal/`)
+  const secret = process.env.PAGES_MAL_API_SECRET
+
+  const animesRes = await fetch(process.env.HTTPS_URL + `/api/mal/?secret=${secret}`)
   const animesJson = await animesRes.json()
 
   return {
@@ -90,4 +93,4 @@ export default Index
       animes: animesJson ?? null
     }
   }
-} */
+}*/

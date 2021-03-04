@@ -8,6 +8,8 @@ module.exports = {
     FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
     FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
     PART_OF_GCP_CREDENTIAL: process.env.PART_OF_GCP_CREDENTIAL,
-    HTTPS_URL: process.env.HTTPS_URL
+    HTTPS_URL: process.env.HTTPS_URL,
+    PAGES_MAL_API_SECRET: process.env.PAGES_MAL_API_SECRET,
+    FIRESTORE_LIMIT: process.env.FIRESTORE_LIMIT
   }
 }
