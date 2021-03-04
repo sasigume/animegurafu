@@ -1,5 +1,5 @@
 import { AnimeOnFirebase, NumberOfDate, Subtype } from "@/models/firebase/Anime"
-import dayjs, { Dayjs } from "dayjs"
+
 const ConvertForNivo = (animes: AnimeOnFirebase[], mode: Subtype) => {
   const convertedData = animes.map((anime: AnimeOnFirebase) => {
     let positionArray: any = []

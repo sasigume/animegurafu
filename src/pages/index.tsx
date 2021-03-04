@@ -26,23 +26,23 @@ interface IndexProps {
   animes: AnimeOnFirebase[]
 }
 
-const Index = ({ /*animes*/ }: IndexProps) => {
+const Index = ({ animes }: IndexProps) => {
 
   return (<>
     <Layout>
 
-      <Head>
+    <Head>
         <title>animegurafu</title>
       </Head>
       <Main>
-        {/*} <Box>
+        <Box>
           <Box fontSize="2rem">スコア</Box>
           <Divider />
           <AnimeGraph animes={animes} mode="byscore" />
           <Box fontSize="2rem">人気</Box>
           <Divider />
           <AnimeGraph animes={animes} mode="bypopularity" />
-  </Box> */}
+        </Box>
         <Text>
           Built with <Code>Next.js</Code> + <Code>chakra-ui</Code> + <Code>firebase</Code> + <Code>nivo</Code> +{' '}
           <Code>typescript</Code>.
@@ -81,7 +81,7 @@ const Index = ({ /*animes*/ }: IndexProps) => {
 
 export default Index
 
-/*export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
 
   const secret = process.env.PAGES_MAL_API_SECRET
 
@@ -93,4 +93,4 @@ export default Index
       animes: animesJson ?? null
     }
   }
-}*/
+}
