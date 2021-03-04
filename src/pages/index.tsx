@@ -26,7 +26,7 @@ interface IndexProps {
   animes: AnimeOnFirebase[]
 }
 
-const Index = ({ animes }: IndexProps) => {
+const Index = ({ /*animes*/ }: IndexProps) => {
 
   return (<>
     <Layout>
@@ -40,7 +40,7 @@ const Index = ({ animes }: IndexProps) => {
         <Box>
           <Box fontSize="2rem">スコア順</Box>
           <Divider />
-          <AnimeGraph animes={animes} />
+          {/*<AnimeGraph animes={animes} />*/}
         </Box>
         <Text>
           Built with <Code>Next.js</Code> + <Code>chakra-ui</Code> +{' '}
@@ -80,7 +80,7 @@ const Index = ({ animes }: IndexProps) => {
 
 export default Index
 
-export const getStaticProps: GetStaticProps = async () => {
+/*export const getStaticProps: GetStaticProps = async () => {
 
   const animesRes = await fetch(process.env.HTTPS_URL + `/api/mal/`)
   const animesJson = await animesRes.json()
@@ -90,4 +90,4 @@ export const getStaticProps: GetStaticProps = async () => {
       animes: animesJson ?? null
     }
   }
-}
+} */
