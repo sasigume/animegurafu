@@ -143,9 +143,12 @@ const ConvertForGraph: Converter = (fetchedData) => {
     }
   )
 
+  const sampleLength = gdsForBumpScore[0].data.length
+
   const result = (slice: number) => {
     return {
       lastConverted: dayjs().toDate(),
+      sampleLength: sampleLength,
 
       byScore: {
         gdsForBump: gdsForBumpScore.slice(0, slice),

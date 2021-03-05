@@ -16,6 +16,7 @@ export interface DataForTwoGraph {
 }
 
 export type Converted = {
+  sampleLength: number
   lastConverted: Date
   byScore: DataForTwoGraph
   byPopularity: DataForTwoGraph

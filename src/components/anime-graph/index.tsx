@@ -12,9 +12,9 @@ interface AnimeGraphProps {
 
 const AnimeGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
 
-  const dataForGraph = ConvertForGraph(dataFromFirebase) as Converted
+  const dataForGraph: Converted = ConvertForGraph(dataFromFirebase)
 
-  let limitBySlider
+  let length = dataForGraph.sampleLength
 
   if (!dataForGraph.byScore || !dataForGraph.byPopularity) {
     return <Box>DATA IS INVALID</Box>
@@ -23,17 +23,17 @@ const AnimeGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
     console.info(`RECEIVED: ${JSON.stringify(dataForGraph)}`)
 
     return (
-      <Box>
+      <Box style={{maxWidth:"100vw"}} overflowX="scroll">
         <Box fontSize="2rem">※JikanAPIが1日データをキャッシュするので、取得タイミングのせいでグラフが平らになっているかもしれません。</Box>
+        <Box>Length: {length}</Box>
         <Box fontSize="1rem">Fetched: {(`${dataFromFirebase.lastFetched}`)}</Box>
         <Box fontSize="1rem">Converted: {(`${dataForGraph.lastConverted}`)}</Box>
         <Divider my={8} />
         <Divider my={8} />
-        {limitBySlider}
         <Divider my={8} />
         <Box fontSize="2rem">スコア順</Box>
         <>
-          <Box h="container.md" position="static">
+          <Box w={length*200} h="container.md" position="static">
             <Box fontSize="1.6rem">順位推移</Box>
 
             <NivoBump gds={dataForGraph.byScore.gdsForBump} mode="byscore" />
@@ -42,7 +42,7 @@ const AnimeGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
         </>
 
         <>
-          <Box h="container.md" position="static">
+          <Box w={length*200} h="container.md" position="static">
             <Box fontSize="1.6rem">数値推移</Box>
             <NivoLine gds={dataForGraph.byScore.gdsForLine} mode="byscore" />
           </Box>
@@ -53,7 +53,7 @@ const AnimeGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
         <Box fontSize="2rem">人気順</Box>
 
         <>
-          <Box h="container.md" position="static">
+          <Box w={length*200} h="container.md" position="static">
             <Box fontSize="1.6rem">順位推移</Box>
 
             <NivoBump gds={dataForGraph.byPopularity.gdsForBump} mode="bypopularity" />
@@ -62,7 +62,7 @@ const AnimeGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
         </>
 
         <>
-          <Box h="container.md" position="static">
+          <Box w={length*200} h="container.md" position="static">
             <Box fontSize="1.6rem">数値推移</Box>
             <NivoLine gds={dataForGraph.byPopularity.gdsForLine} mode="bypopularity" />
           </Box>
