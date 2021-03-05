@@ -45,12 +45,21 @@ const GraphDatasForLine: ReturnGD = ({ animes, mode }: GDProps) => {
       positionArrayForLine.push(singlePosForLine)
     }
 
-    let data: Pos[] = positionArrayForLine
+     /* ---------------------------
+    // IMPORTANT: REMOVE DUPLICATED DATA
+    // https://stackoverflow.com/a/60716511/15161394
+    ------------------------------*/
+
+    const posWithoutDuplicate:any = {}
+    for (const item of positionArrayForLine) {
+      posWithoutDuplicate[item.x] = item;
+    }
+    const datasWithoutDuplicate = Object.values(posWithoutDuplicate);
 
     return {
       id: `${anime.title_japanese}`,
-      data: data
-    }
+      data: datasWithoutDuplicate as Pos[]
+    } 
   })
 }
 
@@ -66,12 +75,14 @@ const GraphDatasForBump: ReturnGD = ({ animes, mode }: GDProps) => {
 
     let positionArrayForBump: any = []
 
+
     for (let key in inArray) {
       let numberOfDateForBump: NumberOfDate = anime.rankOfScoreArray[key]
 
       if (mode == "bypopularity") {
         numberOfDateForBump = anime.rankOfPopularityArray[key]
       }
+
       let singlePosForBump = {
         x: Object.keys(numberOfDateForBump ?? '')[0],
         y: Object.values(numberOfDateForBump ?? 0)[0]
@@ -84,11 +95,16 @@ const GraphDatasForBump: ReturnGD = ({ animes, mode }: GDProps) => {
       positionArrayForBump.push(singlePosForBump)
     }
 
-    let data: Pos[] = positionArrayForBump
+   
+    const posWithoutDuplicate:any = {}
+    for (const item of positionArrayForBump) {
+      posWithoutDuplicate[item.x] = item;
+    }
+    const datasWithoutDuplicate = Object.values(posWithoutDuplicate);
 
     return {
       id: `${anime.title_japanese}`,
-      data: data
+      data: datasWithoutDuplicate as Pos[]
     }
   })
 }
@@ -127,13 +143,13 @@ const ConvertForGraph: Converter = (fetchedData) => {
       lastConverted: dayjs().toDate(),
 
       byScore: {
-        gdsForBump: gdsForBumpScore.slice(0,slice),
-        gdsForLine: gdsForLineScore.slice(0,slice)
+        gdsForBump: gdsForBumpScore.slice(0, slice),
+        gdsForLine: gdsForLineScore.slice(0, slice)
       },
 
       byPopularity: {
-        gdsForBump: gdsForBumpPop.slice(0,slice),
-        gdsForLine: gdsForLinePop.slice(0,slice)
+        gdsForBump: gdsForBumpPop.slice(0, slice),
+        gdsForLine: gdsForLinePop.slice(0, slice)
       }
     }
   }
