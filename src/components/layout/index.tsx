@@ -34,7 +34,7 @@ export const Layout = ({ children, debugInfo }: LayoutProps) => {
         <Head>
           <title>animegurafu</title>
         </Head>
-        <Container maxW="container.xl">
+        <Container maxW="container.xl" pb={8}>
           <Hero />
 
           {children}
@@ -56,8 +56,10 @@ export const Layout = ({ children, debugInfo }: LayoutProps) => {
       <CTA />
 
 
-      <Flex as="footer" py="8rem">
-        <Text>Distributed under MIT Lisence. The site owner do not own these anime stats.</Text>
+      <Flex w="full" as="footer" pt={8} pb={20}>
+        <Container>
+          <Box>Distributed under MIT Lisence. The site owner do not own these anime stats.</Box>
+        </Container>
       </Flex>
     </Box>
   )

@@ -19,19 +19,31 @@ const NivoLine = (props: GraphProps) => {
       <ResponsiveLine
         data={props.gds}
         colors={{ datum: 'color' }}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+        margin={{ top: 60, right: 210, bottom: 60, left: 60 }}
         xScale={{ type: 'point' }}
         yScale={{ type: 'linear', min: 'auto', max: 'auto', reverse: false }}
         yFormat=" >-.2f"
-        axisTop={null}
+        axisTop={{
+          orient: 'top',
+          tickSize: 5,
+          tickPadding: 15,
+          tickRotation: 0,
+          legend: '日付',
+          legendOffset: -46,
+          legendPosition: 'middle',
+          //@ts-ignore
+          format: function (value: string) {
+            return dayjs(value).format('MM月DD日')
+          } as string,
+        }}
         axisRight={null}
         axisBottom={{
           orient: 'bottom',
           tickSize: 5,
-          tickPadding: 5,
+          tickPadding: 15,
           tickRotation: 0,
           legend: '日付',
-          legendOffset: 36,
+          legendOffset: 46,
           legendPosition: 'middle',
           //@ts-ignore
           format: function (value: string) {
@@ -43,9 +55,6 @@ const NivoLine = (props: GraphProps) => {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: props.mode,
-          legendOffset: -50,
-          legendPosition: 'middle'
         }}
         pointSize={10}
         pointColor={{ theme: 'background' }}

@@ -13,7 +13,7 @@ export const CTA = () => (
     <Container maxW="container.xl">
       <Flex>
         <ChakraLink isExternal href="https://jikan.moe/" flexGrow={1} mx={2}>
-          <Button width="100%" variant="outline" colorScheme="blue">
+          <Button width="100%" colorScheme="green">
             Jikan API
       </Button>
         </ChakraLink>

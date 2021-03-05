@@ -14,16 +14,16 @@ const NivoBump = (props: GraphProps) => {
     <Box w="full" h="full">
       <ResponsiveBump
         data={props.gds}
-        margin={{ top: 40, right: 100, bottom: 40, left: 60 }}
+        margin={{ top: 40, right: 200, bottom: 40, left: 60 }}
         colors={{ datum: 'color' }}
         //@ts-ignore
-        lineWidth={3}
+        lineWidth={4}
         activeLineWidth={6}
-        inactiveLineWidth={3}
-        inactiveOpacity={0.15}
+        inactiveLineWidth={4}
+        inactiveOpacity={0.3}
         pointSize={10}
         activePointSize={16}
-        inactivePointSize={0}
+        inactivePointSize={6}
         pointColor={{ theme: 'background' }}
         pointBorderWidth={3}
         activePointBorderWidth={3}
@@ -55,9 +55,9 @@ const NivoBump = (props: GraphProps) => {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: props.mode,
+          legend: '順位',
           legendPosition: 'middle',
-          legendOffset: -40,
+          legendOffset: -50,
           format: function (value: string) {
             return `${value}位`
           },
