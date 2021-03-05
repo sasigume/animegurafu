@@ -1,14 +1,16 @@
-import { Converted } from "@/models/graph/Converted"
+import { Subtype } from "@/models/firebase/Anime"
+import { Converted, graphData } from "@/models/graph/Converted"
 import { Box } from "@chakra-ui/react"
 
 import { ResponsiveLine } from '@nivo/line'
 
 interface GraphProps {
-  data: Converted,
+  gds: graphData[],
+  mode: Subtype
 }
 const NivoLine = (props: GraphProps) => {
-  let length = { min: 'auto', max: 'auto' } as any
-  if (props.data.mode == "byscore") {
+  let length = { min: 0, max: 3000000 } as any
+  if (props.mode == "byscore") {
     length = {
       min: 0,
       max: 10
@@ -17,7 +19,7 @@ const NivoLine = (props: GraphProps) => {
   return (
     <Box w="full" h="full">
       <ResponsiveLine
-        data={props.data.animes}
+        data={props.gds}
         margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
         xScale={{ type: 'point' }}
         yScale={{ type: 'linear', min: 'auto', max: 'auto', reverse: false }}
@@ -38,7 +40,7 @@ const NivoLine = (props: GraphProps) => {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: props.data.mode,
+          legend: props.mode,
           legendOffset: -40,
           legendPosition: 'middle'
         }}

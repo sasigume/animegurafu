@@ -22,12 +22,11 @@ import { FetchedData } from '@/models/firebase/Anime'
 import dayjs from 'dayjs'
 
 interface IndexProps {
-  dataByScore: FetchedData
-  dataByPopularity: FetchedData
+  fetchedData: FetchedData
   lastGSP: Date
 }
 
-const Index = ({ dataByScore, dataByPopularity,lastGSP }: IndexProps) => {
+const Index = ({ fetchedData,lastGSP }: IndexProps) => {
 
   return (<>
     <Layout debugInfo={
@@ -40,9 +39,7 @@ const Index = ({ dataByScore, dataByPopularity,lastGSP }: IndexProps) => {
         <title>animegurafu</title>
       </Head>
         <Box>
-          <AnimeGraph dataFromFirebase={dataByScore} />
-          <Divider />
-          <AnimeGraph dataFromFirebase={dataByPopularity} />
+          <AnimeGraph dataFromFirebase={fetchedData} />
         </Box>
         <Divider my={8} />
         <Text>
@@ -86,20 +83,15 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const secret = process.env.PAGES_MAL_API_SECRET
 
-  const apiResultByscore = await fetch(process.env.HTTPS_URL + `/api/mal/?secret=${secret}&mode=byscore`)
-  const apiResultBypopularity = await fetch(process.env.HTTPS_URL + `/api/mal/?secret=${secret}&mode=bypopularity`)
-
-  const json = {
-    byscore: await apiResultByscore.json(),
-    bypopularity: await apiResultBypopularity.json()
-  }
+  const apiResult = await fetch(process.env.HTTPS_URL + `/api/mal/?secret=${secret}&mode=byscore`)
+  const apiResultJson = await apiResult.json()
  
   return {
     props: {
       lastGSP: dayjs().toString(),
-      dataByScore: json.byscore ?? null,
-      dataByPopularity: json.bypopularity ?? null
-    }
+      fetchedData: apiResultJson ?? null
+    },
+    revalidate: 3600
   }
 }
  /*

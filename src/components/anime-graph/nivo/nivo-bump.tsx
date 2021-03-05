@@ -1,14 +1,16 @@
-import { Converted } from "@/models/graph/Converted"
+import { Subtype } from "@/models/firebase/Anime"
+import { Converted, graphData } from "@/models/graph/Converted"
 import { Box } from "@chakra-ui/react"
 
 import { ResponsiveBump } from '@nivo/bump'
 
 interface GraphProps {
-  data: Converted
+  mode: Subtype
+  gds: graphData[]
 }
 const NivoBump = (props: GraphProps) => {
   let length = { min: 'auto', max: 'auto' } as any
-  if (props.data.mode == "byscore") {
+  if (props.mode == "byscore") {
     length = {
       min: 0,
       max: 10
@@ -17,7 +19,7 @@ const NivoBump = (props: GraphProps) => {
   return (
     <Box w="full" h="full">
       <ResponsiveBump
-        data={props.data.animesForBump}
+        data={props.gds}
         margin={{ top: 40, right: 100, bottom: 40, left: 60 }}
         colors={{ scheme: 'spectral' }}
         pointSize={10}
@@ -48,7 +50,7 @@ const NivoBump = (props: GraphProps) => {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: props.data.mode,
+          legend: props.mode,
           legendPosition: 'middle',
           legendOffset: -40
         }}

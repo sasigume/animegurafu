@@ -1,79 +1,119 @@
 import { AnimeOnFirebase, FetchedData, NumberOfDate, Subtype } from "@/models/firebase/Anime"
-import { Converted } from "@/models/graph/Converted"
+import { Converted, graphData, GraphType, Pos } from "@/models/graph/Converted"
 import dayjs from "dayjs"
 
 
-  // Conver data into the structure shown below URL
-  // https://nivo.rocks/bump/
+// Conver data into the structure shown below URL
+// https://nivo.rocks/bump/
 
-const ConvertForGraph = (data:FetchedData) => {
-  const convertedData = data.animes.map((anime: AnimeOnFirebase) => {
+interface GDProps {
+  animes: AnimeOnFirebase[]
+  mode: Subtype
+  graphType: GraphType
+}
+
+type ReturnGD = ({ animes, mode, graphType }: GDProps) => graphData[]
+
+const GraphDatas: ReturnGD = ({ animes, mode, graphType }: GDProps) => {
+
+  return animes.map((anime: AnimeOnFirebase) => {
+
 
     let inArray = anime.scoreArray
-    if (data.mode == "bypopularity") {
+    if (mode == "bypopularity") {
       inArray = anime.membersArray
     }
 
-    let positionArray: any = []
-    for (let key in inArray) {
-      // Change pos of dot depends on mode
-      let numberOfDate: NumberOfDate = anime.scoreArray[key]
-      
-      if (data.mode == "bypopularity") {
-        numberOfDate = anime.membersArray[key]
-      }
-      
-      let singlePos = {
-        x: Object.keys(numberOfDate)[0],
-        y: Object.values(numberOfDate)[0]
-      }
-      
-      positionArray.push(singlePos)
-    }
-
-    return {
-      id: `${anime.title_japanese}`,
-      data: positionArray
-    }
-  })
-
-  // this returns only int rank
-  const convertedDataForBump = data.animes.map((anime: AnimeOnFirebase) => {
+    let positionArrayForLine: any = []
     let positionArrayForBump: any = []
 
-    let inArray = anime.rankOfScoreArray
-    
-    if (data.mode == "bypopularity") {
-      inArray = anime.rankOfPopularityArray
-    }
-
     for (let key in inArray) {
       // Change pos of dot depends on mode
-      let numberOfDate: NumberOfDate = anime.rankOfScoreArray[key]
-      
-      if (data.mode == "bypopularity") {
-        numberOfDate = anime.rankOfPopularityArray[key]
+      let numberOfDateForLine: NumberOfDate = anime.scoreArray[key]
+      let numberOfDateForBump: NumberOfDate = anime.rankOfScoreArray[key]
+
+      if (mode == "bypopularity") {
+        numberOfDateForLine = anime.membersArray[key]
+        numberOfDateForBump = anime.rankOfPopularityArray[key]
       }
-      let singlePos = {
-        x: Object.keys(numberOfDate)[0],
-        y: Object.values(numberOfDate)[0]
+
+      let singlePosForLine = {
+        x: Object.keys(numberOfDateForLine ?? '')[0],
+        y: Object.values(numberOfDateForLine ?? 0)[0]
       }
-      
-      positionArrayForBump.push(singlePos)
+      let singlePosForBump = {
+        x: Object.keys(numberOfDateForBump ?? '')[0],
+        y: Object.values(numberOfDateForBump ?? 0)[0]
+      }
+
+      if (singlePosForLine.x == undefined || singlePosForLine.y == undefined) {
+        singlePosForLine.x = 'エラー'
+      }
+      if (singlePosForBump.x == undefined || singlePosForBump.y == undefined) {
+        singlePosForBump.x = 'エラー'
+      }
+
+      positionArrayForLine.push(singlePosForLine)
+      positionArrayForBump.push(singlePosForBump)
+    }
+
+    let data: Pos[] = positionArrayForLine
+
+    if (graphType == "bump") {
+      data = positionArrayForBump
     }
 
     return {
       id: `${anime.title_japanese}`,
-      data: positionArrayForBump
+      data: data
     }
   })
+}
 
-  return {
-    mode: data.mode,
+type Converter = (fetchedData: FetchedData) => Converted
+
+const ConvertForGraph: Converter = (fetchedData) => {
+  const gdsForLinePop = GraphDatas(
+    {
+      animes: fetchedData.animesByPopularity,
+      mode: "bypopularity",
+      graphType: "line"
+    }
+  )
+  const gdsForBumpPop = GraphDatas(
+    {
+      animes: fetchedData.animesByPopularity,
+      mode: "bypopularity",
+      graphType: "line"
+    }
+  )
+  const gdsForLineScore = GraphDatas(
+    {
+      animes: fetchedData.animesByScore,
+      mode: "byscore",
+      graphType: "line"
+    }
+  )
+  const gdsForBumpScore = GraphDatas(
+    {
+      animes: fetchedData.animesByScore,
+      mode: "byscore",
+      graphType: "bump"
+    }
+  )
+
+  const result = {
     lastConverted: dayjs().toDate(),
-    animes: convertedData,
-    animesForBump: convertedDataForBump
-  } as Converted
+    byPopularity: {
+      gdsForLine: gdsForLinePop,
+      gdsForBump: gdsForBumpPop
+    },
+    byScore: {
+      gdsForLine: gdsForLineScore,
+      gdsForBump: gdsForBumpScore
+    }
+  }
+  return result as Converted
 }
 
 export default ConvertForGraph
