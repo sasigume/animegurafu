@@ -3,13 +3,16 @@ import { Main } from '../Main'
 import Head from 'next/head'
 import { ReactNode } from 'react'
 import { Hero } from '../Hero'
+import LayoutDrawer from './layout-drawer'
 
 interface LayoutProps {
   children: ReactNode,
-  flexProps?: FlexProps
+  debugInfo?: {
+    lastGSP: Date
+  }
 }
 
-export const Layout = ({ children }: LayoutProps) => {
+export const Layout = ({ children, debugInfo }: LayoutProps) => {
   const { colorMode } = useColorMode()
 
   const bgColor = { light: 'gray.50', dark: 'gray.900' }
@@ -38,6 +41,12 @@ export const Layout = ({ children }: LayoutProps) => {
       </Box>
 
     </Flex>
+
+    <LayoutDrawer>
+      <Box>
+        デバッグ(lastGSP): {debugInfo?.lastGSP ?? null}
+      </Box>
+    </LayoutDrawer>
   </Box>
   )
 }
