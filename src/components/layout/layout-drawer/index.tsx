@@ -16,6 +16,7 @@ import {
   Divider,
   Link,
 } from "@chakra-ui/react"
+import { DarkModeSwitch } from '@/components/common/DarkModeSwitch'
 
 interface Props {
   children: ReactNode
@@ -41,8 +42,7 @@ export default function LayoutDrawer({ children }: Props) {
           <DrawerContent>
             <DrawerCloseButton />
             <DrawerHeader mt={12} justifyContent="center">
-              <Box mb={8}>
-              </Box>
+              
 
               <Divider mb={8} />
 
@@ -56,6 +56,9 @@ export default function LayoutDrawer({ children }: Props) {
               {children}
             </DrawerBody>
             <DrawerFooter>
+            <Box mb={8}>
+              <DarkModeSwitch />
+              </Box>
 
             </DrawerFooter>
           </DrawerContent>

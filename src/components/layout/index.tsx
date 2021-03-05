@@ -1,15 +1,16 @@
-import { Flex, useColorMode, FlexProps, Box, Center, Container } from '@chakra-ui/react'
-import { Main } from '../Main'
+import { Flex, useColorMode, FlexProps, Box, Center, Container, Text } from '@chakra-ui/react'
 import Head from 'next/head'
 import { ReactNode } from 'react'
 import { Hero } from '../Hero'
 import LayoutDrawer from './layout-drawer'
 import { CTA } from './CTA'
+import { DarkModeSwitch } from '../common/DarkModeSwitch'
 
 interface LayoutProps {
   children: ReactNode,
   debugInfo?: {
     lastGSP: Date
+    lastFetched: string
   }
 }
 
@@ -20,7 +21,6 @@ export const Layout = ({ children, debugInfo }: LayoutProps) => {
 
   const color = { light: 'black', dark: 'white' }
 
-  // important: DO NOT WRAP this Flex with any component!!!
   return (
     <Box style={{ width: "100vw" }}>
       <Flex
@@ -48,9 +48,17 @@ export const Layout = ({ children, debugInfo }: LayoutProps) => {
         <Box>
           デバッグ(lastGSP): {debugInfo?.lastGSP ?? null}
         </Box>
+        <Box>
+          デバッグ(lastFetched): {debugInfo?.lastFetched ?? null}
+        </Box>
       </LayoutDrawer>
 
       <CTA />
+
+
+      <Flex as="footer" py="8rem">
+        <Text>Distributed under MIT Lisence. The site owner do not own these anime stats.</Text>
+      </Flex>
     </Box>
   )
 }
