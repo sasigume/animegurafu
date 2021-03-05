@@ -22,8 +22,9 @@ export const Layout = ({ children, debugInfo }: LayoutProps) => {
 
   // important: DO NOT WRAP this Flex with any component!!!
   return (
-    <Box w="full">
+    <Box style={{ width: "100vw" }}>
       <Flex
+        w="full"
         direction="column"
         alignItems="center"
         justifyContent="center"
