@@ -26,7 +26,7 @@ const AnimeGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
     return <Box>DATA IS INVALID</Box>
   } else {
 
-    console.info(`RECEIVED: ${dataForGraph}`, `font-weight:bold`)
+    console.info(`RECEIVED: ${dataForGraph}`)
 
     return (
       <Box>
