@@ -14,3 +14,5 @@ if (admin.apps.length == 0 && process.env.PART_OF_GCP_CREDENTIAL) {
     credential: admin.credential.cert(credential),
   })  
 }
+
+export default admin.firestore()

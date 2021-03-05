@@ -6,6 +6,7 @@ export interface tsOfDate {
   [key: string]: firebase.firestore.Timestamp
 }
 export interface AnimeOnFirebase {
+  cacheTtlOfRanking: number
   lastUpdateEnv: string
   lastUpdateTime: string
   updateTimeArray: tsOfDate[]
@@ -30,7 +31,7 @@ export interface AnimeOnFirebase {
 }
 
 export interface FetchedData {
-  mode: string
-  lastFetched: Date
-  animes: AnimeOnFirebase[]
+  lastFetched: Date | string
+  animesByPopularity: AnimeOnFirebase[] | Void
+  animesByScore: AnimeOnFirebase[] | Void
 }

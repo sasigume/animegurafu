@@ -22,12 +22,13 @@ import { FetchedData } from '@/models/firebase/Anime'
 import dayjs from 'dayjs'
 
 interface IndexProps {
-  dataByScore: FetchedData
-  dataByPopularity: FetchedData
+  fetchedData: FetchedData
   lastGSP: Date
 }
 
-const Index = ({ dataByScore, dataByPopularity,lastGSP }: IndexProps) => {
+/*
+
+const Index = ({ fetchedData, lastGSP }: IndexProps) => {
 
   return (<>
     <Layout debugInfo={
@@ -39,36 +40,39 @@ const Index = ({ dataByScore, dataByPopularity,lastGSP }: IndexProps) => {
       <Head>
         <title>animegurafu</title>
       </Head>
-        <Box>
-          <AnimeGraph dataFromFirebase={dataByScore} />
-          <Divider />
-          <AnimeGraph dataFromFirebase={dataByPopularity} />
-        </Box>
-        <Divider my={8} />
-        <Text>
-          Built with <Code>Next.js</Code> + <Code>chakra-ui</Code> + <Code>firebase</Code> + <Code>nivo</Code> +{' '}
-          <Code>typescript</Code>.
+      <Box>
+        {(fetchedData.animesByScore && fetchedData.animesByPopularity) ? (
+          <Box>
+            <AnimeGraph dataFromFirebase={fetchedData} />
+          </Box>) : (
+            <Box>FAILED TO FETCH DATA</Box>
+          )}
+      </Box>
+      <Divider my={8} />
+      <Text>
+        Built with <Code>Next.js</Code> + <Code>chakra-ui</Code> + <Code>firebase</Code> + <Code>nivo</Code> +{' '}
+        <Code>typescript</Code>.
       </Text>
 
-        <List spacing={3} my={0}>
-          <ListItem>
-            <ListIcon as={CheckCircleIcon} color="green.500" />
-            <ChakraLink
-              isExternal
-              href="https://chakra-ui.com"
-              flexGrow={1}
-              mr={2}
-            >
-              Chakra UI <LinkIcon />
-            </ChakraLink>
-          </ListItem>
-          <ListItem>
-            <ListIcon as={CheckCircleIcon} color="green.500" />
-            <ChakraLink isExternal href="https://nextjs.org" flexGrow={1} mr={2}>
-              Next.js <LinkIcon />
-            </ChakraLink>
-          </ListItem>
-        </List>
+      <List spacing={3} my={0}>
+        <ListItem>
+          <ListIcon as={CheckCircleIcon} color="green.500" />
+          <ChakraLink
+            isExternal
+            href="https://chakra-ui.com"
+            flexGrow={1}
+            mr={2}
+          >
+            Chakra UI <LinkIcon />
+          </ChakraLink>
+        </ListItem>
+        <ListItem>
+          <ListIcon as={CheckCircleIcon} color="green.500" />
+          <ChakraLink isExternal href="https://nextjs.org" flexGrow={1} mr={2}>
+            Next.js <LinkIcon />
+          </ChakraLink>
+        </ListItem>
+      </List>
 
       <DarkModeSwitch />
       <Footer px={6}>
@@ -86,24 +90,21 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const secret = process.env.PAGES_MAL_API_SECRET
 
-  const apiResultByscore = await fetch(process.env.HTTPS_URL + `/api/mal/?secret=${secret}&mode=byscore`)
-  const apiResultBypopularity = await fetch(process.env.HTTPS_URL + `/api/mal/?secret=${secret}&mode=bypopularity`)
+  const apiResult = await fetch(process.env.HTTPS_URL + `/api/mal/?secret=${secret}&mode=byscore`)
+    .then(res => { return res.json() })
+    .catch((e) => console.error(e))
 
-  const json = {
-    byscore: await apiResultByscore.json(),
-    bypopularity: await apiResultBypopularity.json()
-  }
- 
+
   return {
     props: {
       lastGSP: dayjs().toString(),
-      dataByScore: json.byscore ?? null,
-      dataByPopularity: json.bypopularity ?? null
-    }
+      fetchedData: apiResult ?? null
+    },
+    revalidate: 3600
   }
 }
- /*
+*/
+
 
 export default function Index() {return <Box>API準備中</Box>}
 
-*/
