@@ -97,7 +97,7 @@ export const getStaticProps: GetStaticProps = async () => {
       lastGSP: new Date().toUTCString(),
       fetchedData: apiResult ?? null
     },
-    revalidate: 3600
+    revalidate: 900
   }
 }
  /*
