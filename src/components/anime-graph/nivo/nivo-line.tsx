@@ -31,10 +31,10 @@ const NivoLine = (props: GraphProps) => {
           legend: '日付',
           legendOffset: -46,
           legendPosition: 'middle',
-          //@ts-ignore
+          /*@ts-ignore
           format: function (value: string) {
             return dayjs(value).format('MM月DD日')
-          } as string,
+          } as string,*/
         }}
         axisRight={null}
         axisBottom={{

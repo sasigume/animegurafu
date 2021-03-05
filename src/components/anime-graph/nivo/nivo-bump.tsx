@@ -16,11 +16,12 @@ const NivoBump = (props: GraphProps) => {
         data={props.gds}
         margin={{ top: 40, right: 200, bottom: 40, left: 60 }}
         colors={{ datum: 'color' }}
-        //@ts-ignore
+        /*@ts-ignore
         lineWidth={4}
         activeLineWidth={6}
         inactiveLineWidth={4}
         inactiveOpacity={0.3}
+        */
         pointSize={10}
         activePointSize={16}
         inactivePointSize={6}
