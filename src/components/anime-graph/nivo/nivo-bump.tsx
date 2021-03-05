@@ -9,13 +9,6 @@ interface GraphProps {
   gds: graphData[]
 }
 const NivoBump = (props: GraphProps) => {
-  let length = { min: 'auto', max: 'auto' } as any
-  if (props.mode == "byscore") {
-    length = {
-      min: 0,
-      max: 10
-    }
-  }
   return (
     <Box w="full" h="full">
       <ResponsiveBump
