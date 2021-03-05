@@ -3,6 +3,7 @@ import { Converted, graphData } from "@/models/graph/Converted"
 import { Box } from "@chakra-ui/react"
 
 import { ResponsiveLine } from '@nivo/line'
+import dayjs from "dayjs"
 
 interface GraphProps {
   gds: graphData[],
@@ -33,7 +34,10 @@ const NivoLine = (props: GraphProps) => {
           tickRotation: 0,
           legend: '日付',
           legendOffset: 36,
-          legendPosition: 'middle'
+          legendPosition: 'middle',
+          format: function (value: string) {
+            return dayjs(value).format('MM月DD日')
+          },
         }}
         axisLeft={{
           orient: 'left',
@@ -41,7 +45,7 @@ const NivoLine = (props: GraphProps) => {
           tickPadding: 5,
           tickRotation: 0,
           legend: props.mode,
-          legendOffset: -40,
+          legendOffset: -50,
           legendPosition: 'middle'
         }}
         pointSize={10}

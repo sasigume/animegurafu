@@ -3,6 +3,7 @@ import { Converted, graphData } from "@/models/graph/Converted"
 import { Box } from "@chakra-ui/react"
 
 import { ResponsiveBump } from '@nivo/bump'
+import dayjs from "dayjs"
 
 interface GraphProps {
   mode: Subtype
@@ -23,6 +24,9 @@ const NivoBump = (props: GraphProps) => {
         activePointBorderWidth={3}
         pointBorderColor={{ from: 'serie.color' }}
         axisTop={{
+          format: function (value:string) {
+            return dayjs(value).format('MM月DD日')
+          },
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
@@ -32,12 +36,15 @@ const NivoBump = (props: GraphProps) => {
         }}
         axisRight={null}
         axisBottom={{
+          format: function (value:string) {
+            return dayjs(value).format('MM月DD日');
+          },
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
           legend: '',
           legendPosition: 'middle',
-          legendOffset: 32
+          legendOffset: 32,
         }}
         axisLeft={{
           tickSize: 5,
@@ -45,7 +52,10 @@ const NivoBump = (props: GraphProps) => {
           tickRotation: 0,
           legend: props.mode,
           legendPosition: 'middle',
-          legendOffset: -40
+          legendOffset: -40,
+          format: function (value:string) {
+            return `${value}位`
+          },
         }}
       />
     </Box>
