@@ -47,11 +47,13 @@ const GraphDatas: ReturnGD = ({ animes, mode, graphType }: GDProps) => {
       }
 
       if (singlePosForLine.x == undefined || singlePosForLine.y == undefined) {
-        singlePosForLine.x = 'エラー'
+        singlePosForLine.x = '2021-03-04'
       }
       if (singlePosForBump.x == undefined || singlePosForBump.y == undefined) {
-        singlePosForBump.x = 'エラー'
+        singlePosForBump.x = '2021-03-04'
       }
+
+      singlePosForBump.y = Math.round(Math.random() * 50)
 
       positionArrayForLine.push(singlePosForLine)
       positionArrayForBump.push(singlePosForBump)
@@ -102,18 +104,23 @@ const ConvertForGraph: Converter = (fetchedData) => {
     }
   )
 
-  const result = {
-    lastConverted: dayjs().toDate(),
-    byPopularity: {
-      gdsForLine: gdsForLinePop,
-      gdsForBump: gdsForBumpPop
-    },
-    byScore: {
-      gdsForLine: gdsForLineScore,
-      gdsForBump: gdsForBumpScore
+  const result = (slice: number) => {
+    return {
+      lastConverted: dayjs().toDate(),
+      byPopularity: {
+        gdsForLine: gdsForLinePop.slice(0,slice),
+        gdsForBump: gdsForBumpPop.slice(0,slice)
+      },
+      byScore: {
+        gdsForLine: gdsForLineScore.slice(0,slice),
+        gdsForBump: gdsForBumpScore.slice(0,slice)
+      }
     }
   }
-  return result as Converted
+
+  let finalSlice = 50
+  finalSlice = 3
+  return result(finalSlice) as Converted
 }
 
 export default ConvertForGraph

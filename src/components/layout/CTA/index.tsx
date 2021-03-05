@@ -1,11 +1,9 @@
 import { CONST_REPO_URL } from '@/lib/constants'
-import { Link as ChakraLink, Button } from '@chakra-ui/react'
-
-import { Container } from './Container'
+import { Link as ChakraLink, Button, Flex } from '@chakra-ui/react'
 
 // CTA stands for Call To Action
 export const CTA = () => (
-  <Container
+  <Flex
     flexDirection="row"
     position="fixed"
     bottom="0"
@@ -29,5 +27,5 @@ export const CTA = () => (
         View Repo
       </Button>
     </ChakraLink>
-  </Container>
+  </Flex>
 )

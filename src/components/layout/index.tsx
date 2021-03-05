@@ -1,9 +1,10 @@
-import { Flex, useColorMode, FlexProps, Box, Center } from '@chakra-ui/react'
+import { Flex, useColorMode, FlexProps, Box, Center, Container } from '@chakra-ui/react'
 import { Main } from '../Main'
 import Head from 'next/head'
 import { ReactNode } from 'react'
 import { Hero } from '../Hero'
 import LayoutDrawer from './layout-drawer'
+import { CTA } from './CTA'
 
 interface LayoutProps {
   children: ReactNode,
@@ -21,32 +22,34 @@ export const Layout = ({ children, debugInfo }: LayoutProps) => {
 
   // important: DO NOT WRAP this Flex with any component!!!
   return (
-  <Box w="full">
-    <Flex
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
-      bg={bgColor[colorMode]}
-      color={color[colorMode]}
-    >
-      <Head>
-        <title>animegurafu</title>
-      </Head>
-      <Box>
-        <Hero />
+    <Box w="full">
+      <Flex
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        bg={bgColor[colorMode]}
+        color={color[colorMode]}
+      >
+        <Head>
+          <title>animegurafu</title>
+        </Head>
+        <Container maxW="container.xl">
+          <Hero />
 
           {children}
 
 
-      </Box>
+        </Container>
 
-    </Flex>
+      </Flex>
 
-    <LayoutDrawer>
-      <Box>
-        デバッグ(lastGSP): {debugInfo?.lastGSP ?? null}
-      </Box>
-    </LayoutDrawer>
-  </Box>
+      <LayoutDrawer>
+        <Box>
+          デバッグ(lastGSP): {debugInfo?.lastGSP ?? null}
+        </Box>
+      </LayoutDrawer>
+
+      <CTA />
+    </Box>
   )
 }

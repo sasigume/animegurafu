@@ -11,8 +11,8 @@ import {
 } from '@chakra-ui/react'
 import { CheckCircleIcon, LinkIcon } from '@chakra-ui/icons'
 
-import { DarkModeSwitch } from '../components/DarkModeSwitch'
-import { CTA } from '../components/CTA'
+import { DarkModeSwitch } from '../components/common/DarkModeSwitch'
+import { CTA } from '../components/layout/CTA'
 import { Footer } from '../components/Footer'
 import AnimeGraph from '@/components/anime-graph'
 import Head from 'next/head'
@@ -25,8 +25,6 @@ interface IndexProps {
   fetchedData: FetchedData
   lastGSP: Date
 }
-
-/*
 
 const Index = ({ fetchedData, lastGSP }: IndexProps) => {
 
@@ -78,7 +76,6 @@ const Index = ({ fetchedData, lastGSP }: IndexProps) => {
       <Footer px={6}>
         <Text>Distributed under MIT Lisence. The site owner do not own these anime stats.</Text>
       </Footer>
-      <CTA />
     </Layout>
   </>
   )
@@ -97,14 +94,14 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
-      lastGSP: dayjs().toString(),
+      lastGSP: new Date().toUTCString(),
       fetchedData: apiResult ?? null
     },
     revalidate: 3600
   }
 }
-*/
-
+ /*
 
 export default function Index() {return <Box>API準備中</Box>}
 
+*/
