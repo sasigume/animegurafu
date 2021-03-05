@@ -10,28 +10,25 @@ import {
   Divider,
 } from '@chakra-ui/react'
 import { CheckCircleIcon, LinkIcon } from '@chakra-ui/icons'
-
-import { DarkModeSwitch } from '../components/common/DarkModeSwitch'
-import { CTA } from '../components/layout/CTA'
-import { Footer } from '../components/Footer'
 import AnimeGraph from '@/components/anime-graph'
 import Head from 'next/head'
 import { Layout } from '@/components/layout'
 
 import { FetchedData } from '@/models/firebase/Anime'
-import dayjs from 'dayjs'
 
 interface IndexProps {
   fetchedData: FetchedData
+  fetchedTime: string
   lastGSP: Date
 }
 
-const Index = ({ fetchedData, lastGSP }: IndexProps) => {
+const Index = ({ fetchedData, fetchedTime, lastGSP }: IndexProps) => {
 
   return (<>
     <Layout debugInfo={
       {
-        lastGSP: lastGSP
+        lastGSP: lastGSP,
+        lastFetched: fetchedTime
       }
     }>
 
@@ -43,11 +40,11 @@ const Index = ({ fetchedData, lastGSP }: IndexProps) => {
           <Box>
             <AnimeGraph dataFromFirebase={fetchedData} />
           </Box>) : (
-            <Box>FAILED TO FETCH DATA</Box>
-          )}
+          <Box>FAILED TO FETCH DATA</Box>
+        )}
       </Box>
       <Divider my={8} />
-      <Text>
+      <Text mb={8}>
         Built with <Code>Next.js</Code> + <Code>chakra-ui</Code> + <Code>firebase</Code> + <Code>nivo</Code> +{' '}
         <Code>typescript</Code>.
       </Text>
@@ -71,11 +68,6 @@ const Index = ({ fetchedData, lastGSP }: IndexProps) => {
           </ChakraLink>
         </ListItem>
       </List>
-
-      <DarkModeSwitch />
-      <Footer px={6}>
-        <Text>Distributed under MIT Lisence. The site owner do not own these anime stats.</Text>
-      </Footer>
     </Layout>
   </>
   )
@@ -94,10 +86,11 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
+      fetchedTime: apiResult.lastFetched ?? null,
       lastGSP: new Date().toUTCString(),
       fetchedData: apiResult ?? null
     },
-    revalidate: 3600
+    revalidate: 900
   }
 }
  /*

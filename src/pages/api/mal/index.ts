@@ -6,8 +6,6 @@ import { AnimeOnFirebase, FetchedData, Subtype } from '@/models/firebase/Anime'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
 dayjs.locale('ja')
-
-
 interface Message {
   message: string
 }
@@ -56,10 +54,11 @@ export default async (req: NextApiRequest, res: NextApiResponse<FetchedData | Me
 
     const animesArray = await Promise.all(animesData.map(async (anime: AnimeOnFirebase) => {
       return {
+        color: anime.color,
         cacheTtlOfRanking: anime.cacheTtlOfRanking,
         lastUpdateEnv: anime.lastUpdateEnv,
         lastUpdateTime: anime.lastUpdateTime,
-        //updateTimeArray: anime.updateTimeArray,
+        updateTimeArray: anime.updateTimeArray,
         mal_id: anime.mal_id,
         title: anime.title,
         title_japanese: anime.title_japanese,

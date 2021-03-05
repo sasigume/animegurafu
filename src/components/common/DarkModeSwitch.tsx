@@ -5,10 +5,7 @@ export const DarkModeSwitch = () => {
   const isDark = colorMode === 'dark'
   return (
     <Stack
-      position="fixed"
       direction="row"
-      top="1rem"
-      right="1rem"
       alignItems="center"
       spacing={3}
       >

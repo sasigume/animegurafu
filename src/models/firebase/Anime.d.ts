@@ -11,7 +11,7 @@ export interface AnimeOnFirebase {
   lastUpdateTime: string
   updateTimeArray: tsOfDate[]
   start_date: string
-  end_date?: string
+  end_date: string
   mal_id: string
   title: string
   title_japanese: string
@@ -28,6 +28,7 @@ export interface AnimeOnFirebase {
   membersArray: numberOfDate[]
   rankOfScoreArray: numberOfDate[]
   rankOfPopularityArray: numberOfDate[]
+  color: string
 }
 
 export interface FetchedData {

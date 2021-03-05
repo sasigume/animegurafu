@@ -1,10 +1,34 @@
 import { AnimeOnFirebase, FetchedData, NumberOfDate, Subtype } from "@/models/firebase/Anime"
 import { Converted, graphData, GraphType, Pos } from "@/models/graph/Converted"
+import { randomColor } from "@chakra-ui/theme-tools"
 import dayjs from "dayjs"
 
 
 // Conver data into the structure shown below URL
 // https://nivo.rocks/bump/
+
+/* ---------------------------
+  // IMPORTANT: SORT AND REMOVE DUPLICATED DATA
+  // https://stackoverflow.com/a/60716511/15161394
+  // https://stackoverflow.com/a/60737337/15161394
+  ------------------------------*/
+
+const optimizePos = (posArray: Pos[]) => {
+  const posWithoutDuplicate: any = {}
+  for (const item of posArray) {
+    posWithoutDuplicate[item.x] = item;
+  }
+  const datasWithoutDuplicate = Object.values(posWithoutDuplicate) as any
+
+  const orderedPosArray: any = {};
+  Object.keys(datasWithoutDuplicate).sort(function (a, b) {
+    return a.split('/').join('').localeCompare(b.split('/').join(''))
+  }).forEach(function (key) {
+    orderedPosArray[key] = datasWithoutDuplicate[key]
+  })
+
+  return Object.values(orderedPosArray)
+}
 
 interface GDProps {
   animes: AnimeOnFirebase[]
@@ -33,33 +57,23 @@ const GraphDatasForLine: ReturnGD = ({ animes, mode }: GDProps) => {
       }
 
       let singlePosForLine = {
-        x: Object.keys(numberOfDateForLine ?? '')[0],
+        x: dayjs(Object.keys(numberOfDateForLine ?? '')[0]).format('YYYYMMDD'),
         y: Object.values(numberOfDateForLine ?? 0)[0]
       }
 
       if (singlePosForLine.x == undefined || singlePosForLine.y == undefined) {
-        singlePosForLine.x = '2021-03-04'
+        singlePosForLine.x = dayjs('2021-03-04').format('YYYYMMDD')
       }
 
 
       positionArrayForLine.push(singlePosForLine)
     }
 
-     /* ---------------------------
-    // IMPORTANT: REMOVE DUPLICATED DATA
-    // https://stackoverflow.com/a/60716511/15161394
-    ------------------------------*/
-
-    const posWithoutDuplicate:any = {}
-    for (const item of positionArrayForLine) {
-      posWithoutDuplicate[item.x] = item;
-    }
-    const datasWithoutDuplicate = Object.values(posWithoutDuplicate);
-
     return {
       id: `${anime.title_japanese}`,
-      data: datasWithoutDuplicate as Pos[]
-    } 
+      data: optimizePos(positionArrayForLine) as Pos[],
+      color: anime.color ?? '#000'
+    }
   })
 }
 
@@ -84,27 +98,21 @@ const GraphDatasForBump: ReturnGD = ({ animes, mode }: GDProps) => {
       }
 
       let singlePosForBump = {
-        x: Object.keys(numberOfDateForBump ?? '')[0],
+        x: dayjs(Object.keys(numberOfDateForBump ?? '')[0]).format('YYYYMMDD'),
         y: Object.values(numberOfDateForBump ?? 0)[0]
       }
 
       if (singlePosForBump.x == undefined || singlePosForBump.y == undefined) {
-        singlePosForBump.x = '2021-03-04'
+        singlePosForBump.x = dayjs('2021-03-04').format('YYYYMMDD')
       }
 
       positionArrayForBump.push(singlePosForBump)
     }
 
-   
-    const posWithoutDuplicate:any = {}
-    for (const item of positionArrayForBump) {
-      posWithoutDuplicate[item.x] = item;
-    }
-    const datasWithoutDuplicate = Object.values(posWithoutDuplicate);
-
     return {
-      id: `${anime.title_japanese}`,
-      data: datasWithoutDuplicate as Pos[]
+      id: `${anime.title_japanese}(ID:${anime.mal_id})`,
+      data: optimizePos(positionArrayForBump) as Pos[],
+      color: anime.color ?? '#000'
     }
   })
 }
@@ -138,9 +146,12 @@ const ConvertForGraph: Converter = (fetchedData) => {
     }
   )
 
+  const sampleLength = gdsForBumpScore[0].data.length
+
   const result = (slice: number) => {
     return {
       lastConverted: dayjs().toDate(),
+      sampleLength: sampleLength,
 
       byScore: {
         gdsForBump: gdsForBumpScore.slice(0, slice),

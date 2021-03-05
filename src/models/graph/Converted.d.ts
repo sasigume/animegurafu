@@ -6,8 +6,9 @@ export interface Pos {
   y: number | undefined
 }
 export interface graphData {
-  id: string,
+  id: string
   data: Pos[]
+  color: string
 }
 
 export interface DataForTwoGraph {
@@ -16,6 +17,7 @@ export interface DataForTwoGraph {
 }
 
 export type Converted = {
+  sampleLength: number
   lastConverted: Date
   byScore: DataForTwoGraph
   byPopularity: DataForTwoGraph

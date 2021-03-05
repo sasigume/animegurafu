@@ -1,48 +1,60 @@
 import { Subtype } from "@/models/firebase/Anime"
 import { Converted, graphData } from "@/models/graph/Converted"
-import { Box } from "@chakra-ui/react"
+import { Box, useColorMode } from "@chakra-ui/react"
+import { randomColor } from "@chakra-ui/theme-tools"
 
 import { ResponsiveLine } from '@nivo/line'
+import dayjs from "dayjs"
 
 interface GraphProps {
   gds: graphData[],
   mode: Subtype
 }
 const NivoLine = (props: GraphProps) => {
-  let length = { min: 0, max: 3000000 } as any
-  if (props.mode == "byscore") {
-    length = {
-      min: 0,
-      max: 10
-    }
-  }
+  let themeText= "rgba(0,0,0,1)"
+  const { colorMode } = useColorMode()
+  colorMode == "dark" ? themeText= "rgba(255,255,255,1)" : themeText = "rgba(0,0,0,1)"
   return (
     <Box w="full" h="full">
       <ResponsiveLine
         data={props.gds}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+        colors={{ datum: 'color' }}
+        margin={{ top: 60, right: 210, bottom: 60, left: 60 }}
         xScale={{ type: 'point' }}
         yScale={{ type: 'linear', min: 'auto', max: 'auto', reverse: false }}
         yFormat=" >-.2f"
-        axisTop={null}
+        axisTop={{
+          orient: 'top',
+          tickSize: 5,
+          tickPadding: 15,
+          tickRotation: 0,
+          legend: '日付',
+          legendOffset: -46,
+          legendPosition: 'middle',
+          /*@ts-ignore
+          format: function (value: string) {
+            return dayjs(value).format('MM月DD日')
+          } as string,*/
+        }}
         axisRight={null}
         axisBottom={{
           orient: 'bottom',
           tickSize: 5,
-          tickPadding: 5,
+          tickPadding: 15,
           tickRotation: 0,
           legend: '日付',
-          legendOffset: 36,
-          legendPosition: 'middle'
+          legendOffset: 46,
+          legendPosition: 'middle',
+          //@ts-ignore
+          format: function (value: string) {
+            return dayjs(value).format('MM月DD日')
+          } as string,
         }}
         axisLeft={{
           orient: 'left',
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: props.mode,
-          legendOffset: -40,
-          legendPosition: 'middle'
         }}
         pointSize={10}
         pointColor={{ theme: 'background' }}
@@ -52,6 +64,16 @@ const NivoLine = (props: GraphProps) => {
         useMesh={true}
         legends={[
           {
+            data: [
+              ...props.gds.map((gd) => {
+                return {
+                  id: gd.id,
+                  label: gd.id,
+                  color: gd.color,
+                  fill: gd.color
+                }
+              }) as any
+            ],
             anchor: 'bottom-right',
             direction: 'column',
             justify: false,
@@ -65,10 +87,12 @@ const NivoLine = (props: GraphProps) => {
             symbolSize: 12,
             symbolShape: 'circle',
             symbolBorderColor: 'rgba(0, 0, 0, .5)',
+            itemTextColor: themeText,
             effects: [
               {
                 on: 'hover',
                 style: {
+                  itemTextColor: themeText,
                   itemBackground: 'rgba(0, 0, 0, .03)',
                   itemOpacity: 1
                 }
