@@ -11,8 +11,8 @@ export interface graphData {
 }
 
 export interface DataForTwoGraph {
-  gdsForLine: graphData[] | void
   gdsForBump: graphData[] | void
+  gdsForLine: graphData[] | void
 }
 
 export type Converted = {
