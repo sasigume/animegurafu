@@ -1,5 +1,6 @@
 import { AnimeOnFirebase, FetchedData, NumberOfDate, Subtype } from "@/models/firebase/Anime"
 import { Converted, graphData, GraphType, Pos } from "@/models/graph/Converted"
+import { randomColor } from "@chakra-ui/theme-tools"
 import dayjs from "dayjs"
 
 
@@ -70,7 +71,8 @@ const GraphDatasForLine: ReturnGD = ({ animes, mode }: GDProps) => {
 
     return {
       id: `${anime.title_japanese}`,
-      data: optimizePos(positionArrayForLine) as Pos[]
+      data: optimizePos(positionArrayForLine) as Pos[],
+      color: anime.color ?? '#000'
     }
   })
 }
@@ -108,8 +110,9 @@ const GraphDatasForBump: ReturnGD = ({ animes, mode }: GDProps) => {
     }
 
     return {
-      id: `${anime.title_japanese}`,
-      data: optimizePos(positionArrayForBump) as Pos[]
+      id: `${anime.title_japanese}(ID:${anime.mal_id})`,
+      data: optimizePos(positionArrayForBump) as Pos[],
+      color: anime.color ?? '#000'
     }
   })
 }

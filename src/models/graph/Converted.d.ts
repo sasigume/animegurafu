@@ -6,8 +6,9 @@ export interface Pos {
   y: number | undefined
 }
 export interface graphData {
-  id: string,
+  id: string
   data: Pos[]
+  color: string
 }
 
 export interface DataForTwoGraph {

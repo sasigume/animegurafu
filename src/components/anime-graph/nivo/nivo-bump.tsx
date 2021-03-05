@@ -15,7 +15,12 @@ const NivoBump = (props: GraphProps) => {
       <ResponsiveBump
         data={props.gds}
         margin={{ top: 40, right: 100, bottom: 40, left: 60 }}
-        colors={{ scheme: 'spectral' }}
+        colors={{ datum: 'color' }}
+        //@ts-ignore
+        lineWidth={3}
+        activeLineWidth={6}
+        inactiveLineWidth={3}
+        inactiveOpacity={0.15}
         pointSize={10}
         activePointSize={16}
         inactivePointSize={0}
@@ -24,7 +29,7 @@ const NivoBump = (props: GraphProps) => {
         activePointBorderWidth={3}
         pointBorderColor={{ from: 'serie.color' }}
         axisTop={{
-          format: function (value:string) {
+          format: function (value: string) {
             return dayjs(value).format('MM月DD日')
           },
           tickSize: 5,
@@ -36,7 +41,7 @@ const NivoBump = (props: GraphProps) => {
         }}
         axisRight={null}
         axisBottom={{
-          format: function (value:string) {
+          format: function (value: string) {
             return dayjs(value).format('MM月DD日');
           },
           tickSize: 5,
@@ -53,10 +58,11 @@ const NivoBump = (props: GraphProps) => {
           legend: props.mode,
           legendPosition: 'middle',
           legendOffset: -40,
-          format: function (value:string) {
+          format: function (value: string) {
             return `${value}位`
           },
         }}
+        
       />
     </Box>
   )
