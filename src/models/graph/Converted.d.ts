@@ -1,4 +1,4 @@
-import { Subtype } from "../firebase/Anime";
+import { Subtype } from "../firebase/FetchedData";
 
 export type GraphType = "line" | "bump"
 export interface Pos {

@@ -8,13 +8,19 @@ import {
   ListItem,
   Box,
   Divider,
+  Tabs,
+  TabPanels,
+  TabPanel,
+  TabList,
+  Tab,
 } from '@chakra-ui/react'
 import { CheckCircleIcon, LinkIcon } from '@chakra-ui/icons'
 import AnimeGraph from '@/components/anime-graph'
 import Head from 'next/head'
 import { Layout } from '@/components/layout'
 
-import { FetchedData } from '@/models/firebase/Anime'
+import { FetchedData } from '@/models/firebase/FetchedData'
+import AnimeList from '@/components/anime-list'
 
 interface IndexProps {
   fetchedData: FetchedData
@@ -37,9 +43,23 @@ const Index = ({ fetchedData, fetchedTime, lastGSP }: IndexProps) => {
       </Head>
       <Box>
         {(fetchedData.animesByScore && fetchedData.animesByPopularity) ? (
-          <Box>
-            <AnimeGraph dataFromFirebase={fetchedData} />
-          </Box>) : (
+          <Tabs>
+            <TabList>
+              <Tab fontSize="3rem" fontWeight="bold" mr={6}>グラフ</Tab>
+              <Tab fontSize="3rem" fontWeight="bold">アニメ一覧</Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <AnimeGraph dataFromFirebase={fetchedData} />
+
+              </TabPanel>
+              <TabPanel>
+
+                <AnimeList dataFromFirebase={fetchedData} />
+              </TabPanel>
+            </TabPanels>
+            <Divider my={12} />
+          </Tabs>) : (
           <Box>FAILED TO FETCH DATA</Box>
         )}
       </Box>

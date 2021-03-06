@@ -1,7 +1,7 @@
 import ConvertForGraph from "@/lib/graph/convert"
-import { FetchedData } from "@/models/firebase/Anime"
+import { FetchedData } from "@/models/firebase/FetchedData"
 import { Converted } from "@/models/graph/Converted"
-import { Box, Divider, } from "@chakra-ui/react"
+import { Box, Divider, Tab, TabList, TabPanel, TabPanels, Tabs, } from "@chakra-ui/react"
 import CodeAccordion from "../common/code-accordion"
 import NivoBump from "./nivo/nivo-bump"
 import NivoLine from "./nivo/nivo-line"
@@ -20,8 +20,6 @@ const AnimeGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
     return <Box>DATA IS INVALID</Box>
   } else {
 
-    console.info(`RECEIVED: ${JSON.stringify(dataForGraph)}`)
-
     return (
       <Box style={{ maxWidth: "100vw" }} overflowX="scroll">
         <Box fontSize="1rem">※JikanAPIが1日データをキャッシュするので、取得タイミングのせいでグラフが平らになっているかもしれません。</Box>
@@ -29,50 +27,58 @@ const AnimeGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
         <Box bg="gray.200" p={6} m={6} rounded="xl">
           <Box>Length: {length}</Box>
           <Box fontSize="1rem">Fetched: {(`${dataFromFirebase.lastFetched}`)}</Box>
-          <Box fontSize="1rem">Converted: {(`${dataForGraph.lastConverted}`)}</Box>
         </Box>
         <Divider my={8} />
-        <Box fontSize="3rem">スコア順</Box>
-        <>
-          <Box w={length * 240} h="container.xl" position="static">
-            <Box fontSize="1.6rem">順位推移</Box>
+        <Tabs>
+          <TabList>
+            <Tab fontSize="3rem">スコア順</Tab>
+            <Tab fontSize="3rem">メンバー数順</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <Box fontSize="2rem">スコア順</Box>
+              <>
+                <Box w={length * 150} h="container.xl" position="static">
+                  <Box fontSize="1.6rem">順位推移</Box>
 
-            <NivoBump gds={dataForGraph.byScore.gdsForBump} mode="byscore" />
-          </Box>
-          <Divider my={8} />
-        </>
+                  <NivoBump gds={dataForGraph.byScore.gdsForBump} mode="byscore" />
+                </Box>
+                <Divider my={8} />
+              </>
 
-        <>
-          <Box w={length * 240} h="container.xl" position="static">
-            <Box fontSize="1.6rem">数値推移</Box>
-            <NivoLine gds={dataForGraph.byScore.gdsForLine} mode="byscore" />
-          </Box>
-          <Divider my={16} />
-        </>
+              <>
+                <Box w={length * 150} h="container.xl" position="static">
+                  <Box fontSize="1.6rem">数値推移</Box>
+                  <NivoLine gds={dataForGraph.byScore.gdsForLine} mode="byscore" />
+                </Box>
+                <Divider my={16} />
+              </>
 
+            </TabPanel>
+            <TabPanel>
+              <Box fontSize="2rem">メンバー数順</Box>
 
-        <Box fontSize="3rem">メンバー数順</Box>
+              <>
+                <Box w={length * 150} h="container.xl" position="static">
+                  <Box fontSize="1.6rem">順位推移</Box>
 
-        <>
-          <Box w={length * 240} h="container.xl" position="static">
-            <Box fontSize="1.6rem">順位推移</Box>
+                  <NivoBump gds={dataForGraph.byPopularity.gdsForBump} mode="bypopularity" />
+                </Box>
+                <Divider my={8} />
+              </>
 
-            <NivoBump gds={dataForGraph.byPopularity.gdsForBump} mode="bypopularity" />
-          </Box>
-          <Divider my={8} />
-        </>
+              <>
+                <Box w={length * 150} h="container.xl" position="static">
+                  <Box fontSize="1.6rem">数値推移</Box>
+                  <NivoLine gds={dataForGraph.byPopularity.gdsForLine} mode="bypopularity" />
+                </Box>
+              </>
 
-        <>
-          <Box w={length * 240} h="container.xl" position="static">
-            <Box fontSize="1.6rem">数値推移</Box>
-            <NivoLine gds={dataForGraph.byPopularity.gdsForLine} mode="bypopularity" />
-          </Box>
-        </>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
 
-        <Divider my={16} />
-        <CodeAccordion data={dataForGraph} />
       </Box>
-
     )
   }
 }
