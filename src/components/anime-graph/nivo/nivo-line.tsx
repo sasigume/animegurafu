@@ -11,6 +11,7 @@ interface GraphProps {
   mode: Subtype
 }
 const NivoLine = (props: GraphProps) => {
+
   let themeText= "rgba(0,0,0,1)"
   const { colorMode } = useColorMode()
   colorMode == "dark" ? themeText= "rgba(255,255,255,1)" : themeText = "rgba(0,0,0,1)"

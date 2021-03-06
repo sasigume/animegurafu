@@ -22,7 +22,7 @@ const optimizePos = (posArray: Pos[]) => {
 
   const orderedPosArray: any = {};
   Object.keys(datasWithoutDuplicate).sort(function (a, b) {
-    return a.split('/').join('').localeCompare(b.split('/').join(''))
+    return a.localeCompare(b)
   }).forEach(function (key) {
     orderedPosArray[key] = datasWithoutDuplicate[key]
   })
@@ -62,7 +62,7 @@ const GraphDatasForLine: ReturnGD = ({ animes, mode }: GDProps) => {
       }
 
       if (singlePosForLine.x == undefined || singlePosForLine.y == undefined) {
-        singlePosForLine.x = dayjs('2021-03-04').format('YYYYMMDD')
+        singlePosForLine.x = '20210304'
       }
 
 
@@ -103,7 +103,7 @@ const GraphDatasForBump: ReturnGD = ({ animes, mode }: GDProps) => {
       }
 
       if (singlePosForBump.x == undefined || singlePosForBump.y == undefined) {
-        singlePosForBump.x = dayjs('2021-03-04').format('YYYYMMDD')
+        singlePosForBump.x = '20210304'
       }
 
       positionArrayForBump.push(singlePosForBump)
