@@ -1,4 +1,4 @@
-import { AnimeOnFirebase, FetchedData, NumberOfDate, Subtype } from "@/models/firebase/Anime"
+import { AnimeOnFirebase, FetchedData, NumberOfDate, Subtype } from "@/models/firebase/FetchedData"
 import { Converted, graphData, GraphType, Pos } from "@/models/graph/Converted"
 import { randomColor } from "@chakra-ui/theme-tools"
 import dayjs from "dayjs"

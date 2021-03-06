@@ -1,4 +1,4 @@
-import { Subtype } from "@/models/firebase/Anime"
+import { Subtype } from "@/models/firebase/FetchedData"
 import { Converted, graphData } from "@/models/graph/Converted"
 import { Box } from "@chakra-ui/react"
 

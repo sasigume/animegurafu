@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import firebase from 'firebase/app'
 import '@/lib/firebase/admin'
 import { firestore } from 'firebase-admin'
-import { AnimeOnFirebase, FetchedData, Subtype } from '@/models/firebase/Anime'
+import { AnimeOnFirebase, FetchedData, Subtype } from '@/models/firebase/FetchedData'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
 dayjs.locale('ja')

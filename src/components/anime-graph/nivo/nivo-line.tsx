@@ -1,4 +1,4 @@
-import { Subtype } from "@/models/firebase/Anime"
+import { Subtype } from "@/models/firebase/FetchedData"
 import { Converted, graphData } from "@/models/graph/Converted"
 import { Box, useColorMode } from "@chakra-ui/react"
 import { randomColor } from "@chakra-ui/theme-tools"
@@ -31,10 +31,10 @@ const NivoLine = (props: GraphProps) => {
           legend: '日付',
           legendOffset: -46,
           legendPosition: 'middle',
-          /*@ts-ignore
+          //@ts-ignore
           format: function (value: string) {
             return dayjs(value).format('MM月DD日')
-          } as string,*/
+          } as string,
         }}
         axisRight={null}
         axisBottom={{

@@ -14,7 +14,8 @@ import AnimeGraph from '@/components/anime-graph'
 import Head from 'next/head'
 import { Layout } from '@/components/layout'
 
-import { FetchedData } from '@/models/firebase/Anime'
+import { FetchedData } from '@/models/firebase/FetchedData'
+import AnimeList from '@/components/anime-list'
 
 interface IndexProps {
   fetchedData: FetchedData
@@ -39,6 +40,8 @@ const Index = ({ fetchedData, fetchedTime, lastGSP }: IndexProps) => {
         {(fetchedData.animesByScore && fetchedData.animesByPopularity) ? (
           <Box>
             <AnimeGraph dataFromFirebase={fetchedData} />
+            <Divider my={12} />
+            <AnimeList dataFromFirebase={fetchedData} />
           </Box>) : (
           <Box>FAILED TO FETCH DATA</Box>
         )}
