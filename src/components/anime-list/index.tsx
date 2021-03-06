@@ -17,7 +17,7 @@ const AnimeList = ({ dataFromFirebase }: AnimeGraphProps) => {
 
     return (
       <Stack style={{maxWidth:"100vw"}} overflowX="scroll" spacing={2}>
-        <Box as="h2">追跡中のアニメ一覧</Box>
+        <Box as="h2" fontSize="2rem">追跡中のアニメ一覧</Box>
         <SimpleGrid width="900px" spacing={4} columns={5} flexWrap="wrap">
           {animes.map((anime: AnimeForList) => {
             return (
