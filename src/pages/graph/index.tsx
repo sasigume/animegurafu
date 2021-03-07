@@ -17,9 +17,7 @@ import { Layout } from '@/components/layout'
 import { FetchedData } from '@/models/index'
 import AnimeList from '@/components/anime-list'
 import { SITE_NAME } from '@/lib/constants'
-
 /*
-
 interface GraphPageProps {
   fetchedData: FetchedData
   fetchedTime: string
@@ -83,7 +81,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const secret = process.env.PAGES_MAL_API_SECRET
 
-  const apiResult = await fetch(process.env.HTTPS_URL + `/api/mal/?secret=${secret}&mode=byscore`)
+  const apiResult = await fetch(process.env.HTTPS_URL + `/api/mal/getall/?secret=${secret}&mode=byscore`)
     .then(res => { return res.json() })
     .catch((e) => console.error(e))
 
@@ -100,5 +98,6 @@ export const getStaticProps: GetStaticProps = async () => {
 }
 
 */
+
 export default function GraphPage() {return <Box>API準備中</Box>}
 
