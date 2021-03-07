@@ -4,8 +4,7 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start",
-    "now-build": "cp src/lib/canvas_lib64/*so.1 node_modules/canvas/build/Release/ && npm run build"
+    "start": "next start"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.5",
@@ -22,8 +21,7 @@
     "framer-motion": "^3.5.2",
     "next": "latest",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "victory": "^35.4.10"
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
     "@types/node": "^14.6.0",
