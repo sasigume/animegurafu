@@ -8,31 +8,26 @@ import {
   ListItem,
   Box,
   Divider,
-  Tabs,
-  TabPanels,
-  TabPanel,
-  TabList,
-  Tab,
 } from '@chakra-ui/react'
 import { CheckCircleIcon, LinkIcon } from '@chakra-ui/icons'
-import AnimeGraph from '@/components/anime-graph'
 import Head from 'next/head'
 import { Layout } from '@/components/layout'
 
-import { FetchedData } from '@/models/firebase/FetchedData'
+import { FetchedData } from '@/models/index'
 import AnimeList from '@/components/anime-list'
-
-interface IndexProps {
+import { SITE_NAME } from '@/lib/constants'
+ 
+interface AnimesPageProps {
   fetchedData: FetchedData
   fetchedTime: string
   lastGSP: Date
   revalEnv: number
 }
-
-const Index = ({ fetchedData, fetchedTime, lastGSP, revalEnv }: IndexProps) => {
+/*
+const AnimesPage = ({ fetchedData, fetchedTime, lastGSP, revalEnv }: AnimesPageProps) => {
 
   return (<>
-    <Layout debugInfo={
+    <Layout isIndex title={SITE_NAME} desc={"アニメ一覧です"} debugInfo={
       {
         lastGSP: lastGSP,
         lastFetched: fetchedTime,
@@ -40,28 +35,14 @@ const Index = ({ fetchedData, fetchedTime, lastGSP, revalEnv }: IndexProps) => {
       }
     }>
 
-      <Head>
-        <title>animegurafu</title>
-      </Head>
       <Box>
         {(fetchedData.animesByScore && fetchedData.animesByPopularity) ? (
-          <Tabs>
-            <TabList>
-              <Tab fontSize="3rem" fontWeight="bold" mr={6}>グラフ</Tab>
-              <Tab fontSize="3rem" fontWeight="bold">アニメ一覧</Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel>
-                <AnimeGraph dataFromFirebase={fetchedData} />
+          <>
 
-              </TabPanel>
-              <TabPanel>
+            <AnimeList dataFromFirebase={fetchedData} />
 
-                <AnimeList dataFromFirebase={fetchedData} />
-              </TabPanel>
-            </TabPanels>
             <Divider my={12} />
-          </Tabs>) : (
+          </>) : (
           <Box>FAILED TO FETCH DATA</Box>
         )}
       </Box>
@@ -95,7 +76,7 @@ const Index = ({ fetchedData, fetchedTime, lastGSP, revalEnv }: IndexProps) => {
   )
 }
 
-export default Index
+export default AnimesPage
 
 export const getStaticProps: GetStaticProps = async () => {
 
@@ -116,8 +97,8 @@ export const getStaticProps: GetStaticProps = async () => {
     revalidate: revalEnv
   }
 }
- /*
 
-export default function Index() {return <Box>API準備中</Box>}
 
 */
+export default function AnimesPage() {return <Box>API準備中</Box>}
+

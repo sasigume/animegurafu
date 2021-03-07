@@ -1,3 +1,5 @@
+// GENERATE REPO URL
+
 let repoEnvs = [
   process.env.NEXT_PUBLIC_VERCEL_GIT_REPO_OWNER,
   process.env.NEXT_PUBLIC_VERCEL_GIT_REPO_SLUG,
@@ -13,3 +15,7 @@ if (repoEnvs[2] == "main") {
 }
 
 export const CONST_REPO_URL = REPO_URL
+
+// CONSTANTS
+
+export const SITE_NAME = "animegurafu"

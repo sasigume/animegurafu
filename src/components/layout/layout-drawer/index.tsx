@@ -15,8 +15,11 @@ import {
   Center,
   Divider,
   Link,
+  VStack,
 } from "@chakra-ui/react"
 import { DarkModeSwitch } from '@/components/common/DarkModeSwitch'
+import LinkChakra from '@/components/common/link-chakra'
+import { CONST_REPO_URL } from '@/lib/constants'
 
 interface Props {
   children: ReactNode
@@ -42,22 +45,32 @@ export default function LayoutDrawer({ children }: Props) {
           <DrawerContent>
             <DrawerCloseButton />
             <DrawerHeader mt={12} justifyContent="center">
-              
+              <VStack spacing={6} mb={6}>
+                <LinkChakra isExternal href="https://jikan.moe/" flexGrow={1} mx={2}>
+                  <Button width="100%" colorScheme="green">
+                    Jikan API
+      </Button>
+                </LinkChakra>
 
-              <Divider mb={8} />
-
-              <Stack direction="column" spacing={6} mb={6}>
-                <Link isExternal href="https://sasigu.me">Creator</Link>
-              </Stack>
-
+                <LinkChakra
+                  isExternal
+                  href={CONST_REPO_URL}
+                >
+                  <Button width="100%" variant="solid" colorScheme="blue">
+                    View Repo
+      </Button>
+                </LinkChakra>
+              </VStack>
 
             </DrawerHeader>
+
             <DrawerBody overflow-y="scroll">
+              <Divider mb={8} />
               {children}
             </DrawerBody>
             <DrawerFooter>
-            <Box mb={8}>
-              <DarkModeSwitch />
+              <Box mb={8}>
+                <DarkModeSwitch />
               </Box>
 
             </DrawerFooter>

@@ -1,5 +1,5 @@
-import { Subtype } from "@/models/firebase/FetchedData"
-import { Converted, graphData } from "@/models/graph/Converted"
+import { Subtype } from '@/models/index'
+import { graphData } from "@/models/index"
 import { Box } from "@chakra-ui/react"
 
 import { ResponsiveBump } from '@nivo/bump'
@@ -10,6 +10,7 @@ interface GraphProps {
   gds: graphData[]
 }
 const NivoBump = (props: GraphProps) => {
+
   return (
     <Box w="full" h="full">
       <ResponsiveBump
@@ -34,10 +35,10 @@ const NivoBump = (props: GraphProps) => {
         activePointBorderWidth={3}
         pointBorderColor={{ from: 'serie.color' }}
         axisTop={{
-          //format: "%b %d",
-          /*format: function (value: string) {
-            return dayjs(value).format('MM月DD日')
-          },*/
+          //@ts-ignore
+          format: function (value: string) {
+            return dayjs(value).format('MM/DD')
+          } as string,
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
@@ -47,10 +48,10 @@ const NivoBump = (props: GraphProps) => {
         }}
         axisRight={null}
         axisBottom={{
-          //format: "%b %d",
-          /* format: function (value: string) {
-            return dayjs(value).format('MM月DD日');
-          }, */
+          //@ts-ignore
+          format: function (value: string) {
+            return dayjs(value).format('MM/DD')
+          } as string,
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
