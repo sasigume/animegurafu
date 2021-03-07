@@ -83,7 +83,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const secret = process.env.PAGES_MAL_API_SECRET
 
-  const apiResult = await fetch(process.env.HTTPS_URL + `/api/mal/getall/?secret=${secret}&mode=byscore`)
+  const apiResult = await fetch(process.env.HTTPS_URL + `/api/mal/getall/?secret=${secret}`)
     .then(res => { return res.json() })
     .catch((e) => console.error(e))
 
