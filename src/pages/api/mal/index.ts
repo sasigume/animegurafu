@@ -58,7 +58,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<FetchedData | Me
         cacheTtlOfRanking: anime.cacheTtlOfRanking,
         lastUpdateEnv: anime.lastUpdateEnv,
         lastUpdateTime: anime.lastUpdateTime,
-        updateTimeArray: anime.updateTimeArray,
+        //updateTimeArray: anime.updateTimeArray,
         mal_id: anime.mal_id,
         title: anime.title,
         title_japanese: anime.title_japanese,

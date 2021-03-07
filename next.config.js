@@ -10,6 +10,7 @@ module.exports = {
     PART_OF_GCP_CREDENTIAL: process.env.PART_OF_GCP_CREDENTIAL,
     HTTPS_URL: process.env.HTTPS_URL,
     PAGES_MAL_API_SECRET: process.env.PAGES_MAL_API_SECRET,
-    FIRESTORE_LIMIT: process.env.FIRESTORE_LIMIT
+    FIRESTORE_LIMIT: process.env.FIRESTORE_LIMIT,
+    BROKEN_DATA: process.env.BROKEN_DATA
   }
 }

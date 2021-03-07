@@ -1,6 +1,5 @@
 import { AnimeOnFirebase, FetchedData, NumberOfDate, Subtype } from "@/models/firebase/FetchedData"
-import { Converted, graphData, GraphType, Pos } from "@/models/graph/Converted"
-import { randomColor } from "@chakra-ui/theme-tools"
+import { Converted, graphData, Pos } from "@/models/graph/Converted"
 import dayjs from "dayjs"
 
 
@@ -14,20 +13,13 @@ import dayjs from "dayjs"
   ------------------------------*/
 
 const optimizePos = (posArray: Pos[]) => {
-  const posWithoutDuplicate: any = {}
-  for (const item of posArray) {
-    posWithoutDuplicate[item.x] = item;
+  let posWithoutDuplicate: any = {}
+  for (let item of posArray) {
+    posWithoutDuplicate[item.x] = item
   }
   const datasWithoutDuplicate = Object.values(posWithoutDuplicate) as any
 
-  const orderedPosArray: any = {};
-  Object.keys(datasWithoutDuplicate).sort(function (a, b) {
-    return a.localeCompare(b)
-  }).forEach(function (key) {
-    orderedPosArray[key] = datasWithoutDuplicate[key]
-  })
-
-  return Object.values(orderedPosArray)
+  return datasWithoutDuplicate.sort((a: Pos, b: Pos) => (dayjs(a.x).toDate() < dayjs(b.x).toDate()) ? -1 : ((dayjs(b.x).toDate() > dayjs(a.x).toDate()) ? 1 : 0))
 }
 
 interface GDProps {
@@ -35,7 +27,17 @@ interface GDProps {
   mode: Subtype
 }
 
-type ReturnGD = ({ animes, mode }: GDProps) => graphData[]
+type ReturnGD = ({ animes, mode }: GDProps) => Converted
+
+const BROKEN_DATA = process.env.BROKEN_DATA?.split(',') ?? []
+
+function containBrokenData(target: string) {
+  var value = 0;
+  BROKEN_DATA.forEach(function (env) {
+    target.includes(dayjs(env).format('YYYY-MM-DD')) && value++
+  });
+  return (value === 1)
+}
 
 const GraphDatasForLine: ReturnGD = ({ animes, mode }: GDProps) => {
 
@@ -55,22 +57,21 @@ const GraphDatasForLine: ReturnGD = ({ animes, mode }: GDProps) => {
       if (mode == "bypopularity") {
         numberOfDateForLine = anime.membersArray[key]
       }
+      let singlePosForLine
 
-      let singlePosForLine = {
-        x: dayjs(Object.keys(numberOfDateForLine ?? '')[0]).format('YYYYMMDD'),
+      singlePosForLine = {
+        x: dayjs(Object.keys(numberOfDateForLine ?? '')[0]).format('YYYY-MM-DD'),
         y: Object.values(numberOfDateForLine ?? 0)[0]
       }
-
-      if (singlePosForLine.x == undefined || singlePosForLine.y == undefined) {
-        singlePosForLine.x = '20210304'
+      if (containBrokenData(singlePosForLine.x)) {
+        positionArrayForLine.push()
+      } else {
+        positionArrayForLine.push(singlePosForLine)
       }
-
-
-      positionArrayForLine.push(singlePosForLine)
     }
 
     return {
-      id: `${anime.title_japanese}`,
+      id: `${anime.title_japanese}(ID:${anime.mal_id})`,
       data: optimizePos(positionArrayForLine) as Pos[],
       color: anime.color ?? '#000'
     }
@@ -98,15 +99,15 @@ const GraphDatasForBump: ReturnGD = ({ animes, mode }: GDProps) => {
       }
 
       let singlePosForBump = {
-        x: dayjs(Object.keys(numberOfDateForBump ?? '')[0]).format('YYYYMMDD'),
+        x: dayjs(Object.keys(numberOfDateForBump ?? '')[0]).format('YYYY-MM-DD'),
         y: Object.values(numberOfDateForBump ?? 0)[0]
       }
 
-      if (singlePosForBump.x == undefined || singlePosForBump.y == undefined) {
-        singlePosForBump.x = '20210304'
+      if (containBrokenData(singlePosForBump.x)) {
+        positionArrayForBump.push()
+      } else {
+        positionArrayForBump.push(singlePosForBump)
       }
-
-      positionArrayForBump.push(singlePosForBump)
     }
 
     return {
@@ -146,12 +147,12 @@ const ConvertForGraph: Converter = (fetchedData) => {
     }
   )
 
-  const sampleLength = gdsForBumpScore[0].data.length
-
   const result = (slice: number) => {
+
     return {
+      ignoredDates: BROKEN_DATA,
       lastConverted: dayjs().toDate(),
-      sampleLength: sampleLength,
+      sampleLength: gdsForBumpScore[0].data.length,
 
       byScore: {
         gdsForBump: gdsForBumpScore.slice(0, slice),
@@ -163,6 +164,7 @@ const ConvertForGraph: Converter = (fetchedData) => {
         gdsForLine: gdsForLinePop.slice(0, slice)
       }
     }
+
   }
 
   let finalSlice = 50

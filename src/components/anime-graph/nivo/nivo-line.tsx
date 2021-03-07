@@ -22,6 +22,7 @@ const NivoLine = (props: GraphProps) => {
         colors={{ datum: 'color' }}
         margin={{ top: 60, right: 210, bottom: 60, left: 60 }}
         xScale={{ type: 'point' }}
+        xFormat="time:%Y-%m-%d"
         yScale={{ type: 'linear', min: 'auto', max: 'auto', reverse: false }}
         yFormat=" >-.2f"
         axisTop={{
