@@ -16,7 +16,7 @@ import { Layout } from '@/components/layout'
 import { FetchedData } from '@/models/index'
 import AnimeList from '@/components/anime-list'
 import { SITE_NAME } from '@/lib/constants'
-
+ /*
 interface AnimesPageProps {
   fetchedData: FetchedData
   fetchedTime: string
@@ -97,8 +97,7 @@ export const getStaticProps: GetStaticProps = async () => {
     revalidate: revalEnv
   }
 }
- /*
-
-export default function AnimesPage() {return <Box>API準備中</Box>}
 
 */
+export default function AnimesPage() {return <Box>API準備中</Box>}
+

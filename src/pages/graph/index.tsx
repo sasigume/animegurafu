@@ -18,14 +18,14 @@ import { FetchedData } from '@/models/index'
 import AnimeList from '@/components/anime-list'
 import { SITE_NAME } from '@/lib/constants'
 
-interface IndexProps {
+interface GraohPageProps {
   fetchedData: FetchedData
   fetchedTime: string
   lastGSP: Date
   revalEnv: number
 }
-
-const Index = ({ fetchedData, fetchedTime, lastGSP, revalEnv }: IndexProps) => {
+ /*
+const GraohPage = ({ fetchedData, fetchedTime, lastGSP, revalEnv }: GraohPageProps) => {
 
   return (<>
     <Layout title={"グラフ"} desc={"グラフです"} debugInfo={
@@ -96,8 +96,7 @@ export const getStaticProps: GetStaticProps = async () => {
     revalidate: revalEnv
   }
 }
- /*
-
-export default function Index() {return <Box>API準備中</Box>}
 
 */
+export default function GraphPage() {return <Box>API準備中</Box>}
+
