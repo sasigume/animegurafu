@@ -26,15 +26,17 @@ interface IndexProps {
   fetchedData: FetchedData
   fetchedTime: string
   lastGSP: Date
+  revalEnv: number
 }
 
-const Index = ({ fetchedData, fetchedTime, lastGSP }: IndexProps) => {
+const Index = ({ fetchedData, fetchedTime, lastGSP, revalEnv }: IndexProps) => {
 
   return (<>
     <Layout debugInfo={
       {
         lastGSP: lastGSP,
-        lastFetched: fetchedTime
+        lastFetched: fetchedTime,
+        revalidate: revalEnv
       }
     }>
 
@@ -103,14 +105,15 @@ export const getStaticProps: GetStaticProps = async () => {
     .then(res => { return res.json() })
     .catch((e) => console.error(e))
 
-
+  let revalEnv = parseInt(process.env.REVALIDATE ?? '1800')
   return {
     props: {
       fetchedTime: apiResult.lastFetched ?? null,
       lastGSP: new Date().toUTCString(),
-      fetchedData: apiResult ?? null
+      fetchedData: apiResult ?? null,
+      revalEnv: revalEnv
     },
-    revalidate: 900
+    revalidate: revalEnv
   }
 }
  /*

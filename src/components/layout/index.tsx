@@ -11,6 +11,7 @@ interface LayoutProps {
   debugInfo?: {
     lastGSP: Date
     lastFetched: string
+    revalidate: number
   }
 }
 
@@ -45,6 +46,9 @@ export const Layout = ({ children, debugInfo }: LayoutProps) => {
       </Flex>
 
       <LayoutDrawer>
+      <Box>
+          デバッグ(revalidate): {debugInfo?.revalidate ?? null}
+        </Box>
         <Box>
           デバッグ(lastGSP): {debugInfo?.lastGSP ?? null}
         </Box>
