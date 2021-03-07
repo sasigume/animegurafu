@@ -1,5 +1,5 @@
-import { AnimeOnFirebase, FetchedData, NumberOfDate, Subtype } from "@/models/firebase/FetchedData"
-import { Converted, graphData, Pos } from "@/models/graph/Converted"
+import { AnimeForGraph, FetchedData, NumberOfDate, Subtype } from '@/models/index'
+import { ConvertedForMultiGraph, graphData, Pos } from "@/models/index"
 import dayjs from "dayjs"
 
 
@@ -23,11 +23,11 @@ const optimizePos = (posArray: Pos[]) => {
 }
 
 interface GDProps {
-  animes: AnimeOnFirebase[]
+  animes: AnimeForGraph[]
   mode: Subtype
 }
 
-type ReturnGD = ({ animes, mode }: GDProps) => Converted
+type ReturnGD = ({ animes, mode }: GDProps) => graphData[]
 
 const BROKEN_DATA = process.env.BROKEN_DATA?.split(',') ?? []
 
@@ -39,9 +39,9 @@ function containBrokenData(target: string) {
   return (value === 1)
 }
 
-const GraphDatasForLine: ReturnGD = ({ animes, mode }: GDProps) => {
+export const GraphDatasForLine: ReturnGD = ({ animes, mode }: GDProps) => {
 
-  return animes.map((anime: AnimeOnFirebase) => {
+  return animes.map((anime: AnimeForGraph) => {
 
 
     let inArray = anime.scoreArray
@@ -78,9 +78,9 @@ const GraphDatasForLine: ReturnGD = ({ animes, mode }: GDProps) => {
   })
 }
 
-const GraphDatasForBump: ReturnGD = ({ animes, mode }: GDProps) => {
+export const GraphDatasForBump: ReturnGD = ({ animes, mode }: GDProps) => {
 
-  return animes.map((anime: AnimeOnFirebase) => {
+  return animes.map((anime: AnimeForGraph) => {
 
 
     let inArray = anime.scoreArray
@@ -118,57 +118,3 @@ const GraphDatasForBump: ReturnGD = ({ animes, mode }: GDProps) => {
   })
 }
 
-type Converter = (fetchedData: FetchedData) => Converted
-
-const ConvertForGraph: Converter = (fetchedData) => {
-
-  const gdsForBumpScore = GraphDatasForBump(
-    {
-      animes: fetchedData.animesByScore,
-      mode: "byscore",
-    }
-  )
-  const gdsForLineScore = GraphDatasForLine(
-    {
-      animes: fetchedData.animesByScore,
-      mode: "byscore",
-    }
-  )
-  const gdsForBumpPop = GraphDatasForBump(
-    {
-      animes: fetchedData.animesByPopularity,
-      mode: "bypopularity",
-    }
-  )
-  const gdsForLinePop = GraphDatasForLine(
-    {
-      animes: fetchedData.animesByPopularity,
-      mode: "bypopularity",
-    }
-  )
-
-  const result = (slice: number) => {
-
-    return {
-      ignoredDates: BROKEN_DATA,
-      lastConverted: dayjs().toDate(),
-      sampleLength: gdsForBumpScore[0].data.length,
-
-      byScore: {
-        gdsForBump: gdsForBumpScore.slice(0, slice),
-        gdsForLine: gdsForLineScore.slice(0, slice)
-      },
-
-      byPopularity: {
-        gdsForBump: gdsForBumpPop.slice(0, slice),
-        gdsForLine: gdsForLinePop.slice(0, slice)
-      }
-    }
-
-  }
-
-  let finalSlice = 50
-  return result(finalSlice) as Converted
-}
-
-export default ConvertForGraph

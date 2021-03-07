@@ -1,6 +1,5 @@
-import ConvertForList from "@/lib/animelist/convert-for-list"
-import { AnimeForList } from "@/models/animelist/ConvertedForList"
-import { FetchedData } from "@/models/firebase/FetchedData"
+import ConvertForList from "@/lib/converter/for-list"
+import { AnimeForGraph, FetchedData } from '@/models/index'
 import {
   Box, Link, List, ListItem, Modal, ModalOverlay, SimpleGrid, Stack, useDisclosure,
   ModalContent,
@@ -9,7 +8,9 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
+  Flex,
 } from "@chakra-ui/react"
+import LinkChakra from "../common/link-chakra"
 
 interface AnimeGraphProps {
   dataFromFirebase: FetchedData
@@ -17,7 +18,7 @@ interface AnimeGraphProps {
 
 const AnimeList = ({ dataFromFirebase }: AnimeGraphProps) => {
 
-  const animes: AnimeForList[] = ConvertForList(dataFromFirebase)
+  const animes: AnimeForGraph[] = ConvertForList(dataFromFirebase)
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   if (!animes || animes.length < 0) {
@@ -27,40 +28,14 @@ const AnimeList = ({ dataFromFirebase }: AnimeGraphProps) => {
     return (
       <Stack style={{ maxWidth: "100vw" }} overflowX="scroll" spacing={2}>
         <Box as="h2" fontSize="2rem">追跡中のアニメ一覧</Box>
-        <SimpleGrid width="900px" spacing={4} columns={5} flexWrap="wrap">
-          {animes.map((anime: AnimeForList) => {
+        <SimpleGrid width="600px" spacing={4} columns={5} flexWrap="wrap">
+          {animes.map((anime: AnimeForGraph) => {
             return (
-
-              <Box w="160px" key={anime.mal_id}>
-
-                <Button onClick={onOpen} isExternal href={anime.url} target="_blank" w="full" h="auto">
+              <LinkChakra display="block" href={(`/animes/${anime.mal_id}`)} w="full" h="auto">
+                <Flex w="90px" key={anime.mal_id}>
                   <img style={{ width: "full" }} src={anime.image_url} />
-                </Button>
-
-
-                <Modal isOpen={isOpen} onClose={onClose}>
-                  <ModalOverlay />
-                  <ModalContent>
-                    <ModalHeader>Modal Title</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                      <List>
-                        <ListItem>(ID: {anime.mal_id})</ListItem>
-                        <ListItem>SCORE: {anime.score}</ListItem>
-                        <ListItem>MEMBERS: {anime.members}</ListItem>
-                      </List>
-                    </ModalBody>
-
-                    <ModalFooter>
-                    <Link href={anime.url} variant="ghost" isExternal>MyAnimeListの詳細ページへ</Link>
-                      <Button colorScheme="red" mr={3} onClick={onClose}>
-                        閉じる</Button>
-                      
-                    </ModalFooter>
-                  </ModalContent>
-                </Modal>
-
-              </Box>
+                </Flex>
+              </LinkChakra>
             )
           })}
         </SimpleGrid>

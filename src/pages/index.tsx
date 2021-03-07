@@ -10,11 +10,11 @@ import {
   Divider,
 } from '@chakra-ui/react'
 import { CheckCircleIcon, LinkIcon } from '@chakra-ui/icons'
-import AnimeGraph from '@/components/anime-graph'
+import MultipleGraph from '@/components/anime-graph/multiple-animes'
 import Head from 'next/head'
 import { Layout } from '@/components/layout'
 
-import { FetchedData } from '@/models/firebase/FetchedData'
+import { FetchedData } from '@/models/index'
 import AnimeList from '@/components/anime-list'
 
 interface IndexProps {
@@ -41,7 +41,7 @@ const Index = ({ fetchedData, fetchedTime, lastGSP, revalEnv }: IndexProps) => {
       <Box>
         {(fetchedData.animesByScore && fetchedData.animesByPopularity) ? (
           <>
-            <AnimeGraph dataFromFirebase={fetchedData} />
+            <MultipleGraph dataFromFirebase={fetchedData} />
 
             <Divider my={12} />
           </>) : (

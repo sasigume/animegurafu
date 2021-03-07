@@ -1,5 +1,5 @@
-import { Subtype } from "@/models/firebase/FetchedData"
-import { Converted, graphData } from "@/models/graph/Converted"
+import { Subtype } from '@/models/index'
+import { graphData } from "@/models/"
 import { Box } from "@chakra-ui/react"
 
 import { ResponsiveBump } from '@nivo/bump'

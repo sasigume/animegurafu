@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import firebase from 'firebase/app'
 import '@/lib/firebase/admin'
 import { firestore } from 'firebase-admin'
-import { AnimeOnFirebase, FetchedData, Subtype } from '@/models/firebase/FetchedData'
+import { AnimeForGraph, FetchedData, Subtype } from '@/models/index'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
 dayjs.locale('ja')
@@ -35,7 +35,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<FetchedData | Me
       snapshot: firestore.QuerySnapshot<firebase.firestore.DocumentData>,
     ) {
       const animeArray = snapshot.docs.slice(0, limit).map((doc) => {
-        const animeOnFirebase = doc.data() as AnimeOnFirebase
+        const animeOnFirebase = doc.data() as AnimeForGraph
         return animeOnFirebase
       })
       return animeArray
@@ -52,7 +52,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<FetchedData | Me
 
     const animesData = GetArrayOfData(snapshot)
 
-    const animesArray = await Promise.all(animesData.map(async (anime: AnimeOnFirebase) => {
+    const animesArray = await Promise.all(animesData.map(async (anime: AnimeForGraph) => {
       return {
         color: anime.color,
         cacheTtlOfRanking: anime.cacheTtlOfRanking,

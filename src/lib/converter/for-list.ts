@@ -1,7 +1,6 @@
-import { AnimeForList } from "@/models/animelist/ConvertedForList"
-import { AnimeOnFirebase, FetchedData, } from "@/models/firebase/FetchedData"
+import { AnimeForGraph, FetchedData, } from '@/models/index'
 
-type Converter = (fetchedData: FetchedData) => AnimeForList[]
+type Converter = (fetchedData: FetchedData) => AnimeForGraph[]
 
 const ConvertForList: Converter = (fetchedData) => {
 
@@ -12,11 +11,11 @@ const ConvertForList: Converter = (fetchedData) => {
   for (let item of allAnimeArray) {
     animesWithoutDuplicate[item.mal_id] = item;
   }
-  const resultWithoutDuplicate = Object.values(animesWithoutDuplicate) as AnimeOnFirebase[]
+  const resultWithoutDuplicate = Object.values(animesWithoutDuplicate) as AnimeForGraph[]
 
   resultWithoutDuplicate.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0))
 
-  return resultWithoutDuplicate.map((anime: AnimeOnFirebase) => {
+  return resultWithoutDuplicate.map((anime: AnimeForGraph) => {
     return {
       color: anime.color,
       cacheTtlOfRanking: anime.cacheTtlOfRanking,

@@ -1,4 +1,4 @@
-import { GetStaticProps } from 'next'
+import { GetStaticProps, } from 'next'
 import {
   Link as ChakraLink,
   Text,
@@ -12,18 +12,21 @@ import {
 import { CheckCircleIcon, LinkIcon } from '@chakra-ui/icons'
 import Head from 'next/head'
 import { Layout } from '@/components/layout'
+import { AnimeForGraph, FetchedData } from '@/models/index'
+import ConvertForList from '@/lib/converter/for-list'
+import AnimeSingle from '@/components/anime-single'
+import ConvertForSingle from '@/lib/converter/for-single'
 
-import { FetchedData } from '@/models/index'
-import AnimeList from '@/components/anime-list'
-
-interface AnimesPageProps {
-  fetchedData: FetchedData
+interface AnimeIDPageProps {
+  anime: AnimeForGraph
   fetchedTime: string
   lastGSP: Date
   revalEnv: number
 }
 
-const AnimesPage = ({ fetchedData, fetchedTime, lastGSP, revalEnv }: AnimesPageProps) => {
+const AnimeIDPage = ({ anime, fetchedTime, lastGSP, revalEnv }: AnimeIDPageProps) => {
+
+  const animeConvertedForSingle = ConvertForSingle(anime)
 
   return (<>
     <Layout debugInfo={
@@ -38,10 +41,10 @@ const AnimesPage = ({ fetchedData, fetchedTime, lastGSP, revalEnv }: AnimesPageP
         <title>animegurafu</title>
       </Head>
       <Box>
-        {(fetchedData.animesByScore && fetchedData.animesByPopularity) ? (
+        {anime ? (
           <>
 
-            <AnimeList dataFromFirebase={fetchedData} />
+            <AnimeSingle anime={animeConvertedForSingle} />
 
             <Divider my={12} />
           </>) : (
@@ -78,13 +81,16 @@ const AnimesPage = ({ fetchedData, fetchedTime, lastGSP, revalEnv }: AnimesPageP
   )
 }
 
-export default AnimesPage
+export default AnimeIDPage
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async (context) => {
+
+  let mal_id
+  context.params ? mal_id = context.params.id : mal_id = null
 
   const secret = process.env.PAGES_MAL_API_SECRET
 
-  const apiResult = await fetch(process.env.HTTPS_URL + `/api/mal/?secret=${secret}&mode=byscore`)
+  const apiResult = await fetch(process.env.HTTPS_URL + `/api/mal/${mal_id}/?secret=${secret}&mode=byscore`)
     .then(res => { return res.json() })
     .catch((e) => console.error(e))
 
@@ -93,10 +99,25 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       fetchedTime: apiResult.lastFetched ?? null,
       lastGSP: new Date().toUTCString(),
-      fetchedData: apiResult ?? null,
+      anime: apiResult ?? null,
       revalEnv: revalEnv
     },
     revalidate: revalEnv
+  }
+}
+
+export async function getStaticPaths() {
+
+  const secret = process.env.PAGES_MAL_API_SECRET
+
+  const apiResult: FetchedData = await fetch(process.env.HTTPS_URL + `/api/mal/?secret=${secret}&mode=byscore`)
+    .then(res => { return res.json() })
+    .catch((e) => console.error(e))
+
+  const paths = ConvertForList(apiResult).map((anime: AnimeForGraph) => `/animes/${anime.mal_id}`)
+  return {
+    paths: paths,
+    fallback: true
   }
 }
  /*

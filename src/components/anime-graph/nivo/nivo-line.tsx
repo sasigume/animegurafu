@@ -1,7 +1,6 @@
-import { Subtype } from "@/models/firebase/FetchedData"
-import { Converted, graphData } from "@/models/graph/Converted"
+import { Subtype } from '@/models/index'
+import { graphData } from "@/models/"
 import { Box, useColorMode } from "@chakra-ui/react"
-import { randomColor } from "@chakra-ui/theme-tools"
 
 import { ResponsiveLine } from '@nivo/line'
 import dayjs from "dayjs"

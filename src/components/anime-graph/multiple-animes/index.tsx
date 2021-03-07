@@ -1,18 +1,17 @@
-import ConvertForGraph from "@/lib/graph/convert"
-import { FetchedData } from "@/models/firebase/FetchedData"
-import { Converted } from "@/models/graph/Converted"
+import ConvertForMultiGraph from "@/lib/converter/for-multi-graph"
+import { FetchedData } from '@/models/index'
+import { ConvertedForMultiGraph } from "@/models/index"
 import { Box, Divider, Tab, TabList, TabPanel, TabPanels, Tabs, } from "@chakra-ui/react"
-import CodeAccordion from "../common/code-accordion"
-import NivoBump from "./nivo/nivo-bump"
-import NivoLine from "./nivo/nivo-line"
+import NivoBump from "../nivo/nivo-bump"
+import NivoLine from "../nivo/nivo-line"
 
 interface AnimeGraphProps {
   dataFromFirebase: FetchedData
 }
 
-const AnimeGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
+const MultipleGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
 
-  const dataForGraph: Converted = ConvertForGraph(dataFromFirebase)
+  const dataForGraph: ConvertedForMultiGraph = ConvertForMultiGraph(dataFromFirebase)
 
   let length = dataForGraph.sampleLength
 
@@ -84,4 +83,4 @@ const AnimeGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
   }
 }
 
-export default AnimeGraph
+export default MultipleGraph
