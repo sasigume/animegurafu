@@ -17,7 +17,8 @@ import { Layout } from '@/components/layout'
 import { FetchedData } from '@/models/index'
 import AnimeList from '@/components/anime-list'
 import { SITE_NAME } from '@/lib/constants'
-/*
+
+
 interface GraphPageProps {
   fetchedData: FetchedData
   fetchedTime: string
@@ -97,7 +98,8 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 }
 
-*/
+/*
 
 export default function GraphPage() {return <Box>API準備中</Box>}
 
+*/

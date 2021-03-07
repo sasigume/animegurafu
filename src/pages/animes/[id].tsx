@@ -27,7 +27,7 @@ interface AnimeIDPageProps {
 }
 
 
-/*
+
 
 const AnimeIDPage = ({ anime, fetchedTime, lastGSP, revalEnv }: AnimeIDPageProps) => {
 
@@ -102,7 +102,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   const secret = process.env.PAGES_MAL_API_SECRET
 
-  const apiResult = await fetch(process.env.HTTPS_URL + `/api/mal/${mal_id}/?secret=${secret}&mode=byscore`)
+  const apiResult = await fetch(process.env.HTTPS_URL + `/api/mal/${mal_id}?secret=${secret}&mode=byscore`)
     .then(res => { return res.json() })
     .catch((e) => console.error(e))
 
@@ -118,11 +118,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 }
 
+
 export async function getStaticPaths() {
 
   const secret = process.env.PAGES_MAL_API_SECRET
 
-  const apiResult: FetchedData = await fetch(process.env.HTTPS_URL + `/api/mal/?secret=${secret}&mode=byscore`)
+  const apiResult: FetchedData = await fetch(process.env.HTTPS_URL + `/api/mal/getall/?secret=${secret}`)
     .then(res => { return res.json() })
     .catch((e) => console.error(e))
 
@@ -136,7 +137,8 @@ export async function getStaticPaths() {
 
 
 
-*/
 
+/*
 export default function AnimeIDPage() {return <Box>API準備中</Box>}
 
+*/
