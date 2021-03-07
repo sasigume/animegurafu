@@ -16,6 +16,9 @@ import { Layout } from '@/components/layout'
 import { FetchedData } from '@/models/index'
 import AnimeList from '@/components/anime-list'
 import { SITE_NAME } from '@/lib/constants'
+import publishSitemap from '@/lib/sitemap'
+import ConvertForSingle from '@/lib/converter/for-single'
+import ConvertForList from '@/lib/converter/for-list'
  
 
 interface AnimesPageProps {
@@ -86,6 +89,10 @@ export const getStaticProps: GetStaticProps = async () => {
   const apiResult = await fetch(process.env.HTTPS_URL + `/api/mal/getall/?secret=${secret}`)
     .then(res => { return res.json() })
     .catch((e) => console.error(e))
+
+  const convertedAnimes = ConvertForList(apiResult)
+
+  publishSitemap(convertedAnimes)
 
   let revalEnv = parseInt(process.env.REVALIDATE ?? '1800')
   return {

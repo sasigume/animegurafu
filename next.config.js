@@ -12,6 +12,7 @@ module.exports = {
     PAGES_MAL_API_SECRET: process.env.PAGES_MAL_API_SECRET,
     FIRESTORE_LIMIT: process.env.FIRESTORE_LIMIT,
     BROKEN_DATA: process.env.BROKEN_DATA,
-    REVALIDATE: process.env.REVALIDATE
+    REVALIDATE: process.env.REVALIDATE,
+    GA_TRACKING_ID: process.env.GA_TRACKING_ID
   }
 }
