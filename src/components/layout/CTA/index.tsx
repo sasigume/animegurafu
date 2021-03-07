@@ -1,5 +1,6 @@
+import LinkChakra from '@/components/common/link-chakra'
 import { CONST_REPO_URL } from '@/lib/constants'
-import { Link as ChakraLink, Button, Flex, Center, Container } from '@chakra-ui/react'
+import { Link as ChakraLink, Button, Flex, Center, Container, Stack } from '@chakra-ui/react'
 
 // CTA stands for Call To Action
 export const CTA = () => (
@@ -8,27 +9,14 @@ export const CTA = () => (
     position="fixed"
     bottom="0"
     width="full"
-    py={2}
   >
-    <Container maxW="container.xl">
-      <Flex>
-        <ChakraLink isExternal href="https://jikan.moe/" flexGrow={1} mx={2}>
-          <Button width="100%" colorScheme="green">
-            Jikan API
-      </Button>
-        </ChakraLink>
+    <Container maxW="container.md" p={2} roundedTop="xl" shadow="xl" bg="white">
+      <Stack spacing={3} h={12} direction="row">
 
-        <ChakraLink
-          isExternal
-          href={CONST_REPO_URL}
-          flexGrow={1}
-          mx={2}
-        >
-          <Button width="100%" variant="solid" colorScheme="blue">
-            View Repo
-      </Button>
-        </ChakraLink>
-      </Flex>
+        <LinkChakra flexGrow={3} href="/graph"><Button w="full" h="full" colorScheme="green">グラフ</Button></LinkChakra>
+        <LinkChakra flexGrow={6} href="/"><Button w="full" h="full" colorScheme="purple">アニメ一覧</Button></LinkChakra>
+        <LinkChakra flexGrow={1} isExternal href="https://sasigu.me"><Button w="full" h="full" colorScheme="twitter">@sasigume</Button></LinkChakra>
+      </Stack>
     </Container>
   </Flex>
 )
