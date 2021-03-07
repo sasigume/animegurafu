@@ -12,19 +12,22 @@ interface GraphProps {
 }
 const NivoLine = (props: GraphProps) => {
 
-  let themeText= "rgba(0,0,0,1)"
+  let themeText = "rgba(0,0,0,1)"
   const { colorMode } = useColorMode()
-  colorMode == "dark" ? themeText= "rgba(255,255,255,1)" : themeText = "rgba(0,0,0,1)"
+  colorMode == "dark" ? themeText = "rgba(255,255,255,1)" : themeText = "rgba(0,0,0,1)"
   return (
     <Box w="full" h="full">
       <ResponsiveLine
         data={props.gds}
         colors={{ datum: 'color' }}
         margin={{ top: 60, right: 210, bottom: 60, left: 60 }}
-        xScale={{ type: 'point' }}
+        xScale={{
+          type: "time",
+          format: "%Y-%m-%d"
+        }}
         xFormat="time:%Y-%m-%d"
         yScale={{ type: 'linear', min: 'auto', max: 'auto', reverse: false }}
-        yFormat=" >-.2f"
+        //yFormat=" >-.2f"
         axisTop={{
           orient: 'top',
           tickSize: 5,
@@ -35,7 +38,7 @@ const NivoLine = (props: GraphProps) => {
           legendPosition: 'middle',
           //@ts-ignore
           format: function (value: string) {
-            return dayjs(value).format('MM月DD日')
+            return dayjs(value).format('MM/DD')
           } as string,
         }}
         axisRight={null}
@@ -49,7 +52,7 @@ const NivoLine = (props: GraphProps) => {
           legendPosition: 'middle',
           //@ts-ignore
           format: function (value: string) {
-            return dayjs(value).format('MM月DD日')
+            return dayjs(value).format('MM/DD')
           } as string,
         }}
         axisLeft={{

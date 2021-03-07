@@ -34,10 +34,10 @@ const NivoBump = (props: GraphProps) => {
         activePointBorderWidth={3}
         pointBorderColor={{ from: 'serie.color' }}
         axisTop={{
-          //format: "%b %d",
-          /*format: function (value: string) {
-            return dayjs(value).format('MM月DD日')
-          },*/
+          //@ts-ignore
+          format: function (value: string) {
+            return dayjs(value).format('MM/DD')
+          } as string,
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
@@ -47,10 +47,10 @@ const NivoBump = (props: GraphProps) => {
         }}
         axisRight={null}
         axisBottom={{
-          //format: "%b %d",
-          /* format: function (value: string) {
-            return dayjs(value).format('MM月DD日');
-          }, */
+          //@ts-ignore
+          format: function (value: string) {
+            return dayjs(value).format('MM/DD')
+          } as string,
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,

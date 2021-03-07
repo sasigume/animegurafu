@@ -1,10 +1,11 @@
-import { Flex, useColorMode, FlexProps, Box, Center, Container, Text } from '@chakra-ui/react'
+import { Flex, useColorMode, FlexProps, Box, Center, Container, Text, Button, Link } from '@chakra-ui/react'
 import Head from 'next/head'
 import { ReactNode } from 'react'
-import { Hero } from '../Hero'
+import { Hero } from './Hero'
 import LayoutDrawer from './layout-drawer'
 import { CTA } from './CTA'
 import { DarkModeSwitch } from '../common/DarkModeSwitch'
+import LinkChakra from '../common/link-chakra'
 
 interface LayoutProps {
   children: ReactNode,
@@ -46,7 +47,7 @@ export const Layout = ({ children, debugInfo }: LayoutProps) => {
       </Flex>
 
       <LayoutDrawer>
-      <Box>
+        <Box>
           デバッグ(revalidate): {debugInfo?.revalidate ?? null}
         </Box>
         <Box>

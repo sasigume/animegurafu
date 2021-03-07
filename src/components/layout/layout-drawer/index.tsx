@@ -17,6 +17,7 @@ import {
   Link,
 } from "@chakra-ui/react"
 import { DarkModeSwitch } from '@/components/common/DarkModeSwitch'
+import LinkChakra from '@/components/common/link-chakra'
 
 interface Props {
   children: ReactNode
@@ -42,22 +43,21 @@ export default function LayoutDrawer({ children }: Props) {
           <DrawerContent>
             <DrawerCloseButton />
             <DrawerHeader mt={12} justifyContent="center">
-              
-
-              <Divider mb={8} />
-
               <Stack direction="column" spacing={6} mb={6}>
-                <Link isExternal href="https://sasigu.me">Creator</Link>
+              <Button colorScheme="green"><LinkChakra href="/">TOP</LinkChakra></Button>
+                <Button colorScheme="purple"><LinkChakra href="/animes">アニメ一覧</LinkChakra></Button>
+                <Button colorScheme="twitter"><LinkChakra isExternal href="https://sasigu.me">@sasigume</LinkChakra></Button>
               </Stack>
 
-
             </DrawerHeader>
+
             <DrawerBody overflow-y="scroll">
+              <Divider mb={8} />
               {children}
             </DrawerBody>
             <DrawerFooter>
-            <Box mb={8}>
-              <DarkModeSwitch />
+              <Box mb={8}>
+                <DarkModeSwitch />
               </Box>
 
             </DrawerFooter>

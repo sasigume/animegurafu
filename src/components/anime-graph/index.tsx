@@ -32,12 +32,12 @@ const AnimeGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
         <Divider my={8} />
         <Tabs>
           <TabList>
-            <Tab fontSize="3rem">スコア順</Tab>
-            <Tab fontSize="3rem">メンバー数順</Tab>
+            <Tab fontSize="2rem">スコア順</Tab>
+            <Tab fontSize="2rem">メンバー数順</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
-              <Box fontSize="2rem">スコア順</Box>
+              <Box fontSize="1.8rem">スコア順</Box>
               <>
                 <Box w={length * 150} h="container.xl" position="static">
                   <Box fontSize="1.6rem">順位推移</Box>
@@ -48,8 +48,8 @@ const AnimeGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
               </>
 
               <>
-                <Box w={length * 150} h="container.xl" position="static">
-                  <Box fontSize="1.6rem">数値推移</Box>
+                <Box w={length * 250} h="container.xl" position="static">
+                  <Box fontSize="1.8rem">数値推移</Box>
                   <NivoLine gds={dataForGraph.byScore.gdsForLine} mode="byscore" />
                 </Box>
                 <Divider my={16} />
@@ -57,7 +57,7 @@ const AnimeGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
 
             </TabPanel>
             <TabPanel>
-              <Box fontSize="2rem">メンバー数順</Box>
+              <Box fontSize="1.8rem">メンバー数順</Box>
 
               <>
                 <Box w={length * 150} h="container.xl" position="static">
@@ -69,7 +69,7 @@ const AnimeGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
               </>
 
               <>
-                <Box w={length * 150} h="container.xl" position="static">
+                <Box w={length * 250} h="container.xl" position="static">
                   <Box fontSize="1.6rem">数値推移</Box>
                   <NivoLine gds={dataForGraph.byPopularity.gdsForLine} mode="bypopularity" />
                 </Box>
