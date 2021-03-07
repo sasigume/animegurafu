@@ -38,7 +38,7 @@ export interface tsOfDate {
 export interface AnimeForGraph {
   cacheTtlOfRanking: number
   lastUpdateEnv: string
-  lastUpdateTime: string
+  lastUpdateTime: any
   updateTimeArray?: tsOfDate[]
   start_date: string
   end_date: string
