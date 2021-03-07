@@ -25,6 +25,7 @@ const AnimeGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
         <Box fontSize="1rem">※JikanAPIが1日データをキャッシュするので、取得タイミングのせいでグラフが平らになっているかもしれません。</Box>
         <Box fontSize="1rem">※同じタイトルでも期が別なら分裂します。</Box>
         <Box bg="gray.200" p={6} m={6} rounded="xl">
+          <Box fontSize="1.3rem" fontWeight="bold">IGNORED DATA: {dataForGraph.ignoredDates.join(' ')}</Box>
           <Box>Length: {length}</Box>
           <Box fontSize="1rem">Fetched: {(`${dataFromFirebase.lastFetched}`)}</Box>
         </Box>

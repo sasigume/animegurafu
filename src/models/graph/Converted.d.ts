@@ -3,9 +3,9 @@ import { Subtype } from "../firebase/FetchedData";
 export type GraphType = "line" | "bump"
 export interface Pos {
   x: string,
-  y: number | undefined
+  y: number
 }
-export interface graphData {
+export type graphData= {
   id: string
   data: Pos[]
   color: string
@@ -17,6 +17,7 @@ export interface DataForTwoGraph {
 }
 
 export type Converted = {
+  ignoredDates: string[],
   sampleLength: number
   lastConverted: Date
   byScore: DataForTwoGraph

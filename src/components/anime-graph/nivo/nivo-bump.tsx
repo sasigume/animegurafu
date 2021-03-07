@@ -16,12 +16,16 @@ const NivoBump = (props: GraphProps) => {
         data={props.gds}
         margin={{ top: 40, right: 200, bottom: 40, left: 60 }}
         colors={{ datum: 'color' }}
-        /*@ts-ignore
+        //@ts-ignore
+        xScale={{
+          type: "time",
+          format: "%Y-%m-%d"
+        }}
+        xFormat="time:%Y-%m-%d"
         lineWidth={4}
         activeLineWidth={6}
         inactiveLineWidth={4}
         inactiveOpacity={0.3}
-        */
         pointSize={10}
         activePointSize={16}
         inactivePointSize={6}
@@ -30,9 +34,10 @@ const NivoBump = (props: GraphProps) => {
         activePointBorderWidth={3}
         pointBorderColor={{ from: 'serie.color' }}
         axisTop={{
-          format: function (value: string) {
+          //format: "%b %d",
+          /*format: function (value: string) {
             return dayjs(value).format('MM月DD日')
-          },
+          },*/
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
@@ -42,9 +47,10 @@ const NivoBump = (props: GraphProps) => {
         }}
         axisRight={null}
         axisBottom={{
-          format: function (value: string) {
+          //format: "%b %d",
+          /* format: function (value: string) {
             return dayjs(value).format('MM月DD日');
-          },
+          }, */
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
