@@ -62,7 +62,10 @@ export interface AnimeForGraph {
 }
 
 export interface AnimeForSingle extends AnimeForGraph {
-  gds: graphData
+
+  // BUMP graph doesn't make sense for single anime
+  gdsForLinePop: graphData[]
+  gdsForLineScore: graphData[]
 }
 
 export interface FetchedData {

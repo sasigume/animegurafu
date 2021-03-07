@@ -78,7 +78,7 @@ export const GraphDatasForLine: ReturnGD = ({ animes, mode }: GDProps) => {
   })
 }
 
-export const GraphDatasForBump: ReturnGD = ({ animes, mode }: GDProps) => {
+export const GraphDatasForBump: ReturnGD = ({ animes, mode, }: GDProps) => {
 
   return animes.map((anime: AnimeForGraph) => {
 
@@ -93,7 +93,6 @@ export const GraphDatasForBump: ReturnGD = ({ animes, mode }: GDProps) => {
 
     for (let key in inArray) {
       let numberOfDateForBump: NumberOfDate = anime.rankOfScoreArray[key]
-
       if (mode == "bypopularity") {
         numberOfDateForBump = anime.rankOfPopularityArray[key]
       }

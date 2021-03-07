@@ -1,4 +1,5 @@
 import { GetStaticProps, } from 'next'
+import ErrorPage from 'next/error'
 import {
   Link as ChakraLink,
   Text,
@@ -16,6 +17,7 @@ import { AnimeForGraph, FetchedData } from '@/models/index'
 import ConvertForList from '@/lib/converter/for-list'
 import AnimeSingle from '@/components/anime-single'
 import ConvertForSingle from '@/lib/converter/for-single'
+import { useRouter } from 'next/dist/client/router'
 
 interface AnimeIDPageProps {
   anime: AnimeForGraph
@@ -26,59 +28,66 @@ interface AnimeIDPageProps {
 
 const AnimeIDPage = ({ anime, fetchedTime, lastGSP, revalEnv }: AnimeIDPageProps) => {
 
-  const animeConvertedForSingle = ConvertForSingle(anime)
+  let animeConvertedForSingle
 
-  return (<>
-    <Layout debugInfo={
-      {
-        lastGSP: lastGSP,
-        lastFetched: fetchedTime,
-        revalidate: revalEnv
-      }
-    }>
+  if (anime) {
+    animeConvertedForSingle = ConvertForSingle(anime)
 
-      <Head>
-        <title>animegurafu</title>
-      </Head>
-      <Box>
-        {anime ? (
-          <>
+    return (<>
+      <Layout
+        title={anime.title_japanese} desc={anime.title_japanese + 'の詳細情報'} debugInfo={
+          {
+            lastGSP: lastGSP,
+            lastFetched: fetchedTime,
+            revalidate: revalEnv
+          }
+        }>
+        <Box>
+          {animeConvertedForSingle ? (
+            <>
 
-            <AnimeSingle anime={animeConvertedForSingle} />
+              <AnimeSingle anime={animeConvertedForSingle} />
 
-            <Divider my={12} />
-          </>) : (
-          <Box>FAILED TO FETCH DATA</Box>
-        )}
-      </Box>
-      <Divider my={8} />
-      <Text mb={8}>
-        Built with <Code>Next.js</Code> + <Code>chakra-ui</Code> + <Code>firebase</Code> + <Code>nivo</Code> +{' '}
-        <Code>typescript</Code>.
-      </Text>
+              <Divider my={12} />
+            </>) : (
+            <Box>FAILED TO FETCH DATA</Box>
+          )}
+        </Box>
+        <Divider my={8} />
+        <Text mb={8}>
+          Built with <Code>Next.js</Code> + <Code>chakra-ui</Code> + <Code>firebase</Code> + <Code>nivo</Code> +{' '}
+          <Code>typescript</Code>.
+        </Text>
 
-      <List spacing={3} my={0}>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          <ChakraLink
-            isExternal
-            href="https://chakra-ui.com"
-            flexGrow={1}
-            mr={2}
-          >
-            Chakra UI <LinkIcon />
-          </ChakraLink>
-        </ListItem>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          <ChakraLink isExternal href="https://nextjs.org" flexGrow={1} mr={2}>
-            Next.js <LinkIcon />
-          </ChakraLink>
-        </ListItem>
-      </List>
-    </Layout>
-  </>
-  )
+        <List spacing={3} my={0}>
+          <ListItem>
+            <ListIcon as={CheckCircleIcon} color="green.500" />
+            <ChakraLink
+              isExternal
+              href="https://chakra-ui.com"
+              flexGrow={1}
+              mr={2}
+            >
+              Chakra UI <LinkIcon />
+            </ChakraLink>
+          </ListItem>
+          <ListItem>
+            <ListIcon as={CheckCircleIcon} color="green.500" />
+            <ChakraLink isExternal href="https://nextjs.org" flexGrow={1} mr={2}>
+              Next.js <LinkIcon />
+            </ChakraLink>
+          </ListItem>
+        </List>
+      </Layout>
+    </>
+    )
+  }
+  else {
+    return (<Layout title={'404 Not found'} desc={''}>
+      <ErrorPage title="アニメの情報が見つかりませんでした" statusCode={404} />
+    </Layout>)
+  }
+
 }
 
 export default AnimeIDPage
@@ -117,7 +126,7 @@ export async function getStaticPaths() {
   const paths = ConvertForList(apiResult).map((anime: AnimeForGraph) => `/animes/${anime.mal_id}`)
   return {
     paths: paths,
-    fallback: true
+    fallback: false
   }
 }
  /*

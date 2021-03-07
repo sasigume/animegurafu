@@ -5,18 +5,25 @@ type Converter = (anime: AnimeForGraph) => any
 
 const ConvertForSingle: Converter = (anime: AnimeForGraph) => {
 
-  const gds = GraphDatasForLine({
-    animes: [anime],
-    mode: "bypopularity"
-  })
-  console.log(gds)
+  const gdsForLineScore = GraphDatasForLine(
+    {
+      animes: [anime],
+      mode: "byscore",
+    }
+  )
+  const gdsForLinePop = GraphDatasForLine(
+    {
+      animes: [anime],
+      mode: "bypopularity",
+    }
+  )
 
   return {
     color: anime.color,
     cacheTtlOfRanking: anime.cacheTtlOfRanking,
     lastUpdateEnv: anime.lastUpdateEnv,
     lastUpdateTime: anime.lastUpdateTime,
-    updateTimeArray: anime.updateTimeArray,
+    //updateTimeArray: anime.updateTimeArray,
     mal_id: anime.mal_id,
     title: anime.title,
     title_japanese: anime.title_japanese,
@@ -35,8 +42,9 @@ const ConvertForSingle: Converter = (anime: AnimeForGraph) => {
     scoreArray: anime.scoreArray,
     rankOfScoreArray: anime.rankOfScoreArray,
     rankOfPopularityArray: anime.rankOfPopularityArray,
-    gds: gds
-  }
+    gdsForLinePop: gdsForLinePop,
+    gdsForLineScore: gdsForLineScore,
+  } as AnimeForSingle
 }
 
 export default ConvertForSingle

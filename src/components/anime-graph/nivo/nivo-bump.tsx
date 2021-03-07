@@ -1,5 +1,5 @@
 import { Subtype } from '@/models/index'
-import { graphData } from "@/models/"
+import { graphData } from "@/models/index"
 import { Box } from "@chakra-ui/react"
 
 import { ResponsiveBump } from '@nivo/bump'
@@ -10,6 +10,7 @@ interface GraphProps {
   gds: graphData[]
 }
 const NivoBump = (props: GraphProps) => {
+
   return (
     <Box w="full" h="full">
       <ResponsiveBump

@@ -9,6 +9,10 @@ import {
   ModalCloseButton,
   Button,
   Flex,
+  StatLabel,
+  StatNumber,
+  Stat,
+  StatHelpText,
 } from "@chakra-ui/react"
 import LinkChakra from "../common/link-chakra"
 
@@ -27,13 +31,19 @@ const AnimeList = ({ dataFromFirebase }: AnimeGraphProps) => {
 
     return (
       <Stack style={{ maxWidth: "100vw" }} overflowX="scroll" spacing={2}>
-        <Box as="h2" fontSize="2rem">追跡中のアニメ一覧</Box>
-        <SimpleGrid width="600px" spacing={4} columns={5} flexWrap="wrap">
+        <Box mb={6} as="h2" fontSize="2rem">追跡中のアニメ一覧(スコア順)</Box>
+        <SimpleGrid spacing={4} minChildWidth="135px">
           {animes.map((anime: AnimeForGraph) => {
             return (
-              <LinkChakra display="block" href={(`/animes/${anime.mal_id}`)} w="full" h="auto">
-                <Flex w="90px" key={anime.mal_id}>
-                  <img style={{ width: "full" }} src={anime.image_url} />
+              <LinkChakra key={anime.mal_id} mb={12} href={(`/animes/${anime.mal_id}`)}>
+                <Flex h="full" position="relative" w="135px" key={anime.mal_id}>
+                  <img style={{ width: "135px",height:"auto" }} src={anime.image_url} />
+
+                  <Box bottom={-30} p={2} w="full" shadow="lg" bg="white" position="absolute"><Stat fontWeight="bold">
+                    <StatNumber>{anime.score} / 10</StatNumber>
+                    <StatHelpText>{anime.members}人視聴</StatHelpText>
+                  </Stat>
+                  </Box>
                 </Flex>
               </LinkChakra>
             )

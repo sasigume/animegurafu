@@ -10,23 +10,25 @@ import {
   Divider,
 } from '@chakra-ui/react'
 import { CheckCircleIcon, LinkIcon } from '@chakra-ui/icons'
+import MultipleGraph from '@/components/anime-graph/multiple-animes'
 import Head from 'next/head'
 import { Layout } from '@/components/layout'
 
 import { FetchedData } from '@/models/index'
 import AnimeList from '@/components/anime-list'
+import { SITE_NAME } from '@/lib/constants'
 
-interface AnimesPageProps {
+interface IndexProps {
   fetchedData: FetchedData
   fetchedTime: string
   lastGSP: Date
   revalEnv: number
 }
 
-const AnimesPage = ({ fetchedData, fetchedTime, lastGSP, revalEnv }: AnimesPageProps) => {
+const Index = ({ fetchedData, fetchedTime, lastGSP, revalEnv }: IndexProps) => {
 
   return (<>
-    <Layout debugInfo={
+    <Layout title={"グラフ"} desc={"グラフです"} debugInfo={
       {
         lastGSP: lastGSP,
         lastFetched: fetchedTime,
@@ -34,21 +36,16 @@ const AnimesPage = ({ fetchedData, fetchedTime, lastGSP, revalEnv }: AnimesPageP
       }
     }>
 
-      <Head>
-        <title>animegurafu</title>
-      </Head>
       <Box>
         {(fetchedData.animesByScore && fetchedData.animesByPopularity) ? (
           <>
-
-            <AnimeList dataFromFirebase={fetchedData} />
+            <MultipleGraph dataFromFirebase={fetchedData} />
 
             <Divider my={12} />
           </>) : (
           <Box>FAILED TO FETCH DATA</Box>
         )}
       </Box>
-      <Divider my={8} />
       <Text mb={8}>
         Built with <Code>Next.js</Code> + <Code>chakra-ui</Code> + <Code>firebase</Code> + <Code>nivo</Code> +{' '}
         <Code>typescript</Code>.
@@ -78,7 +75,7 @@ const AnimesPage = ({ fetchedData, fetchedTime, lastGSP, revalEnv }: AnimesPageP
   )
 }
 
-export default AnimesPage
+export default Index
 
 export const getStaticProps: GetStaticProps = async () => {
 
@@ -101,6 +98,6 @@ export const getStaticProps: GetStaticProps = async () => {
 }
  /*
 
-export default function AnimesPage() {return <Box>API準備中</Box>}
+export default function Index() {return <Box>API準備中</Box>}
 
 */

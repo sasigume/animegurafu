@@ -1,10 +1,11 @@
 {
   "name": "animegurafu",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "now-build": "cp canvas_lib64/*so.1 node_modules/canvas/build/Release/ && npm run build"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.5",
@@ -15,6 +16,7 @@
     "@nivo/bump": "^0.67.0",
     "@nivo/core": "^0.67.0",
     "@nivo/line": "^0.67.0",
+    "canvas": "^2.7.0",
     "dayjs": "^1.10.4",
     "firebase": "^8.2.9",
     "firebase-admin": "^9.5.0",
