@@ -25,7 +25,7 @@ interface AnimeIDPageProps {
   lastGSP: Date
   revalEnv: number
 }
- /*
+/*
 const AnimeIDPage = ({ anime, fetchedTime, lastGSP, revalEnv }: AnimeIDPageProps) => {
 
   let animeConvertedForSingle
@@ -129,7 +129,7 @@ export async function getStaticPaths() {
     fallback: false
   }
 }
-
-
 */
+
+
 export default function AnimeIDPage() {return <Box>API準備中</Box>}
