@@ -1,11 +1,11 @@
 {
   "name": "animegurafu",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "scripts": {
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "now-build": "cp canvas_lib64/*so.1 node_modules/canvas/build/Release/ && npm run build"
+    "now-build": "cp src/lib/canvas_lib64/*so.1 node_modules/canvas/build/Release/ && npm run build"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.5",
