@@ -16,7 +16,7 @@ const generateAnimeItem = (anime: AnimeForGraph): string => {
 <url>
     <loc>${process.env.HTTPS_URL}/animes/${anime.mal_id}</loc>
     <title>${escapeString(anime.title_japanese)}</title>
-    <lastmod>${new Date(anime.lastUpdateTime._seconds*1000).toUTCString()}</lastmod>
+    <lastmod>${new Date(anime.lastUpdateTime._seconds * 1000).toUTCString()}</lastmod>
 </url>
     `)
 }
@@ -35,9 +35,17 @@ const generateSitemap = (animes: AnimeForGraph[]): string => {
     `)
 }
 const publishSitemap = async (animes: AnimeForGraph[]) => {
+  const PATH_DEVELOPINNG = './public/ignore/sitemap.xml'
   const PATH = './public/sitemap.xml'
-  const rss = generateSitemap(animes)
-  fs.writeFileSync(PATH, rss)
+  const sitemap = generateSitemap(animes)
+  if (process.env.NODE_ENV == "development") {
+    fs.writeFileSync(PATH_DEVELOPINNG, sitemap)
+    console.log('Updated sitemap for development: ' + animes.length + ' animes writed')
+  }
+  else {
+    fs.writeFileSync(PATH, sitemap)
+    console.log('Updated sitemap for production: ' + animes.length + ' animes writed')
+  }
 }
 
 export default publishSitemap
