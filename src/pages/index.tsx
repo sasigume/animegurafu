@@ -15,11 +15,12 @@ import { Layout } from '@/components/layout'
 
 import { FetchedData } from '@/models/index'
 import AnimeList from '@/components/anime-list'
-import { SITE_NAME } from '@/lib/constants'
+import { SITE_NAME, SITE_DESC } from '@/lib/constants'
 import publishSitemap from '@/lib/sitemap'
 import ConvertForSingle from '@/lib/converter/for-single'
 import ConvertForList from '@/lib/converter/for-list'
- 
+import MultipleGraph from '@/components/anime-graph/multiple-animes'
+
 
 interface AnimesPageProps {
   fetchedData: FetchedData
@@ -31,7 +32,7 @@ interface AnimesPageProps {
 const AnimesPage = ({ fetchedData, fetchedTime, lastGSP, revalEnv }: AnimesPageProps) => {
 
   return (<>
-    <Layout isIndex title={SITE_NAME} desc={"アニメ一覧です"} debugInfo={
+    <Layout isIndex title={SITE_NAME} desc={SITE_DESC} debugInfo={
       {
         lastGSP: lastGSP,
         lastFetched: fetchedTime,
@@ -42,6 +43,10 @@ const AnimesPage = ({ fetchedData, fetchedTime, lastGSP, revalEnv }: AnimesPageP
       <Box>
         {(fetchedData.animesByScore && fetchedData.animesByPopularity) ? (
           <>
+
+            <MultipleGraph dataFromFirebase={fetchedData} />
+
+            <Divider my={12} />
 
             <AnimeList dataFromFirebase={fetchedData} />
 

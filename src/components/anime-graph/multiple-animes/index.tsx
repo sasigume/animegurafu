@@ -20,7 +20,7 @@ const MultipleGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
   } else {
 
     return (
-      <Box style={{ maxWidth: "100vw" }} overflowX="scroll">
+      <Box id="a_graph" style={{ maxWidth: "100vw" }} overflowX="scroll">
         
         <Tabs>
           <TabList>
@@ -31,7 +31,7 @@ const MultipleGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
             <TabPanel>
               <Box fontSize="1.8rem">スコア順</Box>
               <>
-                <Box w={length * 150} h="container.xl" position="static">
+                <Box w={length * 90} h="container.xl" position="static">
                   <Box fontSize="1.6rem">順位推移</Box>
 
                   <NivoBump gds={dataForGraph.byScore.gdsForBump} mode="byscore" />
@@ -40,7 +40,7 @@ const MultipleGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
               </>
 
               <>
-                <Box w={length * 250} h="container.xl" position="static">
+                <Box w={length * 90} h="container.xl" position="static">
                   <Box fontSize="1.8rem">数値推移</Box>
                   <NivoLine gds={dataForGraph.byScore.gdsForLine} mode="byscore" />
                 </Box>
@@ -52,7 +52,7 @@ const MultipleGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
               <Box fontSize="1.8rem">メンバー数順</Box>
 
               <>
-                <Box w={length * 150} h="container.xl" position="static">
+                <Box w={length * 90} h="container.xl" position="static">
                   <Box fontSize="1.6rem">順位推移</Box>
 
                   <NivoBump gds={dataForGraph.byPopularity.gdsForBump} mode="bypopularity" />
@@ -61,7 +61,7 @@ const MultipleGraph = ({ dataFromFirebase }: AnimeGraphProps) => {
               </>
 
               <>
-                <Box w={length * 250} h="container.xl" position="static">
+                <Box w={length * 90} h="container.xl" position="static">
                   <Box fontSize="1.6rem">数値推移</Box>
                   <NivoLine gds={dataForGraph.byPopularity.gdsForLine} mode="bypopularity" />
                 </Box>
